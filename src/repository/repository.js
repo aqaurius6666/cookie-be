@@ -1,23 +1,12 @@
-const {DataSource} = require('typeorm')
+const { DataSource } = require('typeorm');
+const config = require('../typeorm');
+const dataSource = new DataSource(config);
 
-export const dataSource = new DataSource({
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'cleango',
-    password: 'cleango',
-    database: 'cleango',
-    synchronize: true,
-    logging: false,
-    entities: [
-        __dirname + '/model/*.model.js'
-    ]
-})
+const connectDB = async () => {
+  return dataSource.initialize();
+};
 
-// source.initialize().then(async connection => {
-//     console.log("Connected to database")
-// }).catch(error => console.log(error))
-
-export const connectDB = async () => {
-    return dataSource.initialize()
-}
+module.exports = {
+  connectDB,
+  dataSource,
+};

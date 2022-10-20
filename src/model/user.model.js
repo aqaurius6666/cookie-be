@@ -1,24 +1,9 @@
-const {EntitySchema } = require('typeorm')
+module.exports = class user {
+  id = 0;
 
-export class User {
-    constructor(id, name) {
-        this.id = id;
-        this.name = name;
-    }
+  name = '';
+
+  age = 0;
 }
 
-export const UserSchema = new EntitySchema({
-    name: 'User',
-    target: User,
-    columns: {
-        id: {
-            primary: true,
-            type: 'int',
-            generated: true
-        },
-        name: {
-            type: 'varchar'
-        }
-    }
-})
 

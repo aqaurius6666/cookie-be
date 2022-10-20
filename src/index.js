@@ -1,5 +1,5 @@
 require('./app')().then(() => {
 
 }).catch((err) => {
-    console.log(err)
-})
+  console.log(err);
+});
