@@ -1,6 +1,6 @@
 const { UserRepository } = require('../repository');
 
-module.exports = class userUsecase {
+module.exports = class UserUsecase {
   static userRepo = UserRepository;
 
   static findOne(id) {

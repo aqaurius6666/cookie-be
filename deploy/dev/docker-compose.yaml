@@ -5,4 +5,32 @@ networks:
 services:
   postgres:
     image: postgres:alpine
-    
+    environment:
+      POSTGRES_PASSWORD: cleango
+      POSTGRES_USER: cleango
+      POSTGRES_DB: cleango
+    networks:
+      - cookie
+    ports:
+      - 5432:5432
+  # server:
+  #   build:
+  #     context: ../..
+  #     dockerfile: Dockerfile
+  #   command:
+  #     - /bin/sh
+  #     - -c
+  #     - |
+  #       yarn dev
+  #   # env_file:
+  #   #   - ../.../.env
+  #   depends_on:
+  #     - postgres
+  #   environment:
+  #     - DB_PORT=5432
+  #     - DB_HOST=postgres
+  #     - DB_USER=cleango
+  #     - DB_PASS=cleango
+  #     - DB_NAME=cleango
+  #   networks:
+  #     - cookie

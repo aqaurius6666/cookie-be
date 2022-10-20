@@ -1,0 +1,9 @@
+.husky
+.vscode
+node_modules
+deploy
+.dockerignore
+.env*
+.eslintrc.json
+.gitignore
+Dockerfile
