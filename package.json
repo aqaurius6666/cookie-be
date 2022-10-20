@@ -18,7 +18,6 @@
       "globby": "^11.0.0",
       "morgan": "^1.10.0",
       "pg": "^8.4.0",
-      "reflect-metadata": "^0.1.13",
       "typeorm": "0.3.10"
    },
    "devDependencies": {
