@@ -1,4 +1,4 @@
-module.exports = class user {
+module.exports = class User {
   id = 0;
 
   name = '';

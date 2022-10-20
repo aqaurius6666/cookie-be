@@ -1,6 +1,6 @@
-const UserSchema = require('../schema/user.schema');
+const { User } = require('../model');
 const { dataSource } = require('./repository');
 
-const repository = dataSource.getRepository(UserSchema);
+const repository = dataSource.getRepository(User);
 
 module.exports = repository;
