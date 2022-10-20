@@ -1,3 +1,3 @@
 module.exports = {
-    UserUsecase : require('./user.usecase'),
-}
+  UserUsecase: require('./user.usecase'),
+};

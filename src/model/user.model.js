@@ -4,6 +4,6 @@ module.exports = class user {
   name = '';
 
   age = 0;
-}
+};
 
 

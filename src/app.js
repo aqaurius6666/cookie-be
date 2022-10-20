@@ -1,17 +1,10 @@
-const { ConnectDatabase: connectDatabase, UserRepository } = require('./repository');
+const { ConnectDatabase } = require('./repository');
 const server = require('./route/server');
 
 
 const main = async () => {
-  await connectDatabase();
+  await ConnectDatabase();
   console.log('connect db success');
-  const user = await UserRepository.findOne({
-    where: {
-      id: 1,
-      name: 'test',
-    },
-  });
-  console.log(user);
   server.listen(3000, () => {
     console.log('Server is running on port 3000');
   });

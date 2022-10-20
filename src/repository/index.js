@@ -1,4 +1,4 @@
 module.exports = {
-    ConnectDatabase: require('./repository').connectDB,
-    UserRepository : require('./user.repository'),
-}
+  ConnectDatabase: require('./repository').connectDB,
+  UserRepository: require('./user.repository'),
+};
