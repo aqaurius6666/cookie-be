@@ -1,0 +1,8 @@
+version: '3.7'
+networks:
+  cookie:
+    name: cookie
+services:
+  postgres:
+    image: postgres:alpine
+    
