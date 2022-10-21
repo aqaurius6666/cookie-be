@@ -1,6 +1,14 @@
 const { User } = require('../model');
 const { dataSource } = require('./repository');
 
-const repository = dataSource.getRepository(User);
+class UserRepository {
+    static #repo = dataSource.getRepository(User)
 
-module.exports = repository;
+    static findById(id) {
+        return this.#repo.findOneBy({
+            id,
+        });
+    }
+}
+
+module.exports = UserRepository;
