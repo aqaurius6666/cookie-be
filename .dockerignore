@@ -7,3 +7,4 @@ deploy
 .eslintrc.json
 .gitignore
 Dockerfile
+.secrets
