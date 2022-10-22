@@ -4,7 +4,7 @@ const { response500, response200 } = require('../util/response');
 const router = require('express').Router();
 
 
-router.get('/', async (req, res) => {
+router.get('/user', async (req, res) => {
   try {
     const user = await UserUsecase.findOne(1);
     return response200(res, user);
