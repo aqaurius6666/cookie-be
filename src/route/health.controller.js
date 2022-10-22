@@ -4,7 +4,7 @@ const router = require('express').Router();
 
 
 router.get('/', async (req, res) => {
-    return response200(res, "ok");
+  return response200(res, 'ok');
 });
 
 module.exports = router;
