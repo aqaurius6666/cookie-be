@@ -3,10 +3,18 @@ const globby = require('globby');
 const morgan = require('morgan');
 const app = express();
 
+
+const SKIP_URL = [
+  '/health', '/',
+];
 if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+  app.use(morgan('dev', {
+    skip: (req, _) => SKIP_URL.includes(req.url),
+  }));
 } else {
-  app.use(morgan('combined'));
+  app.use(morgan('combined', {
+    skip: (req, _) => SKIP_URL.includes(req.url),
+  }));
 }
 
 app.use(require('cors')());
