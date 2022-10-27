@@ -1,5 +1,5 @@
-import { EntitySchema } from 'typeorm'
-import { User } from '../model'
+import { EntitySchema } from 'typeorm';
+import { User } from '../model';
 
 const UserSchema = new EntitySchema<User>({
   name: 'User',
@@ -8,14 +8,14 @@ const UserSchema = new EntitySchema<User>({
     id: {
       type: Number,
       primary: true,
-      generated: true
+      generated: true,
     },
     name: {
-      type: String
+      type: String,
     },
     age: {
-      type: Number
-    }
+      type: Number,
+    },
   },
   relations: {
     followers: {
@@ -24,23 +24,31 @@ const UserSchema = new EntitySchema<User>({
       joinTable: {
         name: 'follow',
         joinColumn: {
+          name: 'target_user_id',
+          referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
           name: 'user_id',
-          referencedColumnName: 'id'
-        }
-      }
+          referencedColumnName: 'id',
+        },
+      },
     },
     followings: {
       type: 'many-to-many',
       target: 'User',
       joinTable: {
         name: 'follow',
-        inverseJoinColumn: {
+        joinColumn: {
           name: 'user_id',
-          referencedColumnName: 'id'
-        }
-      }
-    }
-  }
-})
+          referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+          name: 'target_user_id',
+          referencedColumnName: 'id',
+        },
+      },
+    },
+  },
+});
 
-export default UserSchema
+export default UserSchema;

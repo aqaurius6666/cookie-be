@@ -10,7 +10,8 @@
       "dev": "yarn build && NODE_ENV=development node dist/index.js",
       "start": "NODE_ENV=production node src/index.js",
       "lint": "eslint src --ext .ts",
-      "lint:fix": "eslint src --ext .ts --fix"
+      "lint:fix": "eslint src --ext .ts --fix",
+      "format": "prettier --write \"src/**/*.ts\""
    },
    "author": "",
    "license": "ISC",
@@ -33,12 +34,16 @@
       "@typescript-eslint/eslint-plugin": "^5.0.0",
       "eslint": "^8.0.1",
       "eslint-config-google": "^0.14.0",
+      "eslint-config-prettier": "^8.5.0",
       "eslint-config-standard-with-typescript": "^23.0.0",
       "eslint-plugin-import": "^2.25.2",
       "eslint-plugin-n": "^15.0.0",
+      "eslint-plugin-prettier": "^4.2.1",
       "eslint-plugin-promise": "^6.0.0",
       "eslint-plugin-unused-imports": "^2.0.0",
       "husky": "^8.0.1",
+      "lint-staged": "^13.0.3",
+      "prettier": "^2.7.1",
       "typescript": "*"
    }
 }

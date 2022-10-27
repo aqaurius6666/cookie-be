@@ -1,1 +1,1 @@
-export { UserUsecase } from './user.usecase'
+export { UserUsecase } from './user.usecase';
