@@ -129,3 +129,20 @@ postgresql:
         postgresql: ${DB_PORT}
     persistence:
       enabled: true
+
+sish-postgres-client:
+  dns_resolver:
+    enabled: false
+  enabled: ${SISH_DB_ENABLED}
+  service:
+    name: postgres-ssh-tunnel
+  services:
+    sish:
+      domain: ${DOMAIN}
+      port: ${SSH_PORT}
+      request:
+        # domain: ${SUB_DOMAIN}
+        port: 5432
+      from:
+        domain: cookie-be-postgesql
+        port: 5432
