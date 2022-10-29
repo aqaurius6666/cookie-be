@@ -28,10 +28,6 @@ dependencies:
     condition: sish-client.enabled
     repository: https://aqaurius6666.github.io/helm-charts 
     version: 0.4.0
-  - name: sish-postgres-client
-    condition: sish-postgres-client.enabled
-    repository: https://aqaurius6666.github.io/helm-charts 
-    version: 0.4.0
   - name: postgresql
     condition: postgresql.enabled
     repository: https://charts.bitnami.com/bitnami
