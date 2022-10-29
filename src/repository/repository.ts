@@ -5,6 +5,7 @@ require('reflect-metadata');
 const opts: PostgresConnectionOptions = {
   ...TypeormConfig,
   logger: new SimpleConsoleLogger(),
+  // logging: "all",
 };
 export const dataSource = new DataSource(opts);
 

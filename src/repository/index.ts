@@ -1,3 +1,4 @@
 export { connectDB as ConnectDatabase } from './repository';
-export { UserRepository } from './user.repository';
+export * from './user.repository';
 export * from './post.repository';
+export * from './question.repository';

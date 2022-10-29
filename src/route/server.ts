@@ -32,6 +32,8 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.query({ parseArrays: true }));
+// app.set('query parser', 'extend');
 app.use(express.json({ limit: '50mb' }));
 
 globby.sync('./*.controller.{ts,js}', { cwd: __dirname }).forEach((file) => {

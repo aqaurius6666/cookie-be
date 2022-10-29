@@ -11,4 +11,16 @@ export class PostUseCase {
   static async createPost(post: Post) {
     return await this.postRepo.insertOne(post);
   }
+
+  static async getSuggestionPosts({
+    tags,
+    limit,
+    offset,
+  }: {
+    tags: number[];
+    limit: number;
+    offset: number;
+  }) {
+    return await this.postRepo.getSuggestionPosts({ tags, limit, offset });
+  }
 }

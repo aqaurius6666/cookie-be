@@ -1,0 +1,1 @@
+export const NOT_ENOUGH_QUESTION = new Error('NOT_ENOUGH_QUESTION');
