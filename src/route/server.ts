@@ -38,15 +38,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.query({ parseArrays: true }));
 // app.set('query parser', 'extend');
 app.use(express.json({ limit: '50mb' }));
-app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
+const apiRouter = express.Router();
+
 globby.sync('./*.controller.{ts,js}', { cwd: __dirname }).forEach((file) => {
   import(`./${file}`)
     .then((module) => {
-      app.use(module.default);
+      apiRouter.use(module.default);
     })
     .catch((err) => {
       logger.error(err);
     });
 });
 
+app.use('/api', apiRouter);
 export default app;

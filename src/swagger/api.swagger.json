@@ -14,8 +14,8 @@
       "name": "CookieService"
     }
   ],
-  "basePath": "/",
-  "schemes": ["http"],
+  "basePath": "/api",
+  "schemes": ["https", "http"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
