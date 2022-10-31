@@ -13,14 +13,14 @@ healthcheck:
     httpGet:
       path: /
       port: http
-    periodSeconds: 5
-    initialDelaySeconds: 30
+    periodSeconds: 10
+    initialDelaySeconds: 60
   readinessProbe:
     httpGet:
       path: /
       port: http
-    periodSeconds: 5
-    initialDelaySeconds: 30
+    periodSeconds: 10
+    initialDelaySeconds: 60
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
