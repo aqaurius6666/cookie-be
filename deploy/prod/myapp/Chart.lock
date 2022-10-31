@@ -1,9 +1,9 @@
 dependencies:
 - name: sish-client
   repository: https://aqaurius6666.github.io/helm-charts
-  version: 0.4.0
+  version: 0.6.0
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
   version: 11.9.11
-digest: sha256:f87a2253187f14598a491a43f343cd6005c4e56ca56e3502aa97f348ed669da9
-generated: "2022-10-22T00:04:49.986859145+07:00"
+digest: sha256:3b3e387dbbb1547c0602cf6334eacd01b21d2da64d5e30ce875a2d514d42ddd9
+generated: "2022-10-31T16:08:34.339837867+07:00"
