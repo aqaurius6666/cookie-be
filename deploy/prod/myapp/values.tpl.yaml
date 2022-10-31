@@ -11,16 +11,16 @@ image:
 healthcheck:
   livenessProbe:
     httpGet:
-      path: /
+      path: /api/healthz
       port: http
-    periodSeconds: 10
-    initialDelaySeconds: 60
+    periodSeconds: 5
+    initialDelaySeconds: 20
   readinessProbe:
     httpGet:
-      path: /
+      path: /api/healthz
       port: http
-    periodSeconds: 10
-    initialDelaySeconds: 60
+    periodSeconds: 5
+    initialDelaySeconds: 30
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

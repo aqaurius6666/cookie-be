@@ -3,7 +3,7 @@ import { response200 } from '../util/response';
 
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/healthz', async (req, res) => {
   response200(res, 'ok');
 });
 
