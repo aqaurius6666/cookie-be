@@ -10,10 +10,6 @@ const QuestionSchema = new EntitySchema<Question>({
       primary: true,
       generated: true,
     },
-    name: {
-      type: String,
-      nullable: false,
-    },
     content: {
       type: String,
       nullable: false,

@@ -23,12 +23,12 @@ const PostSchema = new EntitySchema<Post>({
       nullable: false,
       default: false,
     },
-    createdAt: {
+    created_at: {
       type: Date,
       nullable: false,
       default: () => 'CURRENT_TIMESTAMP',
     },
-    updatedAt: {
+    updated_at: {
       type: Date,
       nullable: false,
       default: () => 'CURRENT_TIMESTAMP',

@@ -14,7 +14,7 @@ export class Post {
 
   public tags?: Tag[];
 
-  public createdAt?: Date;
+  public created_at?: Date;
 
-  public updatedAt?: Date;
+  public updated_at?: Date;
 }

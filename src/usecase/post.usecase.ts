@@ -1,4 +1,4 @@
-import { Post } from '../model';
+import { Post, POST_NOT_FOUND } from '../model';
 import { PostRepository } from '../repository';
 
 export class PostUseCase {
@@ -22,5 +22,11 @@ export class PostUseCase {
     offset: number;
   }) {
     return await this.postRepo.getSuggestionPosts({ tags, limit, offset });
+  }
+
+  static async getPostById(id: number) {
+    const post = await this.postRepo.findById(id);
+    if (post == null) throw POST_NOT_FOUND;
+    return post;
   }
 }

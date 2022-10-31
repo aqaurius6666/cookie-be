@@ -3,6 +3,9 @@ import globby from 'globby';
 import morgan from 'morgan';
 import cors from 'cors';
 import logger from '../logger';
+import swaggerUI from 'swagger-ui-express';
+import swaggerDocument from '../swagger/api.swagger.json';
+
 const app = express();
 
 const SKIP_URL = ['/health', '/'];
@@ -35,7 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.query({ parseArrays: true }));
 // app.set('query parser', 'extend');
 app.use(express.json({ limit: '50mb' }));
-
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 globby.sync('./*.controller.{ts,js}', { cwd: __dirname }).forEach((file) => {
   import(`./${file}`)
     .then((module) => {

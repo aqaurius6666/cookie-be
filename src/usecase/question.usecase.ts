@@ -17,8 +17,7 @@ export class QuestionUseCase {
     const ids = await this.questionRepo.getListAvailableId();
 
     const randomElement = (arr: number[], n: number) => {
-      if (arr.length === 0) throw NOT_ENOUGH_QUESTION;
-      if (n > arr.length) throw NOT_ENOUGH_QUESTION;
+      if (arr.length === 0 || n > arr.length) throw NOT_ENOUGH_QUESTION;
 
       arr = shuffle(arr);
       return arr.slice(0, n);
