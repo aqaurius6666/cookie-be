@@ -3,7 +3,7 @@ import { Post } from '../model';
 
 const PostSchema = new EntitySchema<Post>({
   name: 'Post',
-  target: Post,
+  // target: Post,
   columns: {
     id: {
       type: Number,
@@ -35,6 +35,36 @@ const PostSchema = new EntitySchema<Post>({
     },
   },
   relations: {
+    upvote_users: {
+      type: 'many-to-many',
+      target: 'User',
+      joinTable: {
+        name: 'upvote_post',
+        joinColumn: {
+          name: 'post_id',
+          referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+          name: 'user_id',
+          referencedColumnName: 'id',
+        },
+      },
+    },
+    downvote_users: {
+      type: 'many-to-many',
+      target: 'User',
+      joinTable: {
+        name: 'downvote_post',
+        joinColumn: {
+          name: 'post_id',
+          referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+          name: 'user_id',
+          referencedColumnName: 'id',
+        },
+      },
+    },
     author: {
       type: 'many-to-one',
       target: 'User',

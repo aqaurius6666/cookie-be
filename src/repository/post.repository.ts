@@ -1,5 +1,5 @@
 import { In } from 'typeorm';
-import { Post } from '../model';
+import { Post, POST_NOT_FOUND } from '../model';
 import PostSchema from '../schema/post.schema';
 import { dataSource } from './repository';
 
@@ -7,12 +7,14 @@ export class PostRepository {
   private static readonly repo = dataSource.getRepository(PostSchema);
 
   static async findById(id: number) {
-    return await this.repo.findOne({
+    const post = await this.repo.findOne({
       where: {
         id,
       },
       relations: ['author', 'tags'],
     });
+    if (!post) throw POST_NOT_FOUND;
+    return post;
   }
 
   static async insertOne(post: Post) {

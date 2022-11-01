@@ -56,6 +56,8 @@ message Post {
     repeated Tag tags = 6;
     string created_at = 7;
     string updated_at = 8;
+    int32 upvote = 9;
+    int32 downvote = 10;
 }
 
 message Question {

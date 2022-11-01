@@ -18,6 +18,36 @@ const UserSchema = new EntitySchema<User>({
     },
   },
   relations: {
+    upvote_posts: {
+      type: 'many-to-many',
+      target: 'Post',
+      joinTable: {
+        name: 'upvote_post',
+        joinColumn: {
+          name: 'user_id',
+          referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+          name: 'post_id',
+          referencedColumnName: 'id',
+        },
+      },
+    },
+    downvote_posts: {
+      type: 'many-to-many',
+      target: 'Post',
+      joinTable: {
+        name: 'downvote_post',
+        joinColumn: {
+          name: 'user_id',
+          referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+          name: 'post_id',
+          referencedColumnName: 'id',
+        },
+      },
+    },
     followers: {
       type: 'many-to-many',
       target: 'User',

@@ -17,4 +17,12 @@ export class Post {
   public created_at?: Date;
 
   public updated_at?: Date;
+
+  public upvote_users?: User[]; // upvote_users is the name of the relation in the schema
+
+  public downvote_users?: User[]; // downvote_users is the name of the relation in the schema
+
+  public upvote?: number; // upvotes is the name of the column in the schema
+
+  public downvote?: number; // downvotes is the name of the column in the schema
 }

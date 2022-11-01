@@ -1,3 +1,5 @@
+import { Post } from './post.model';
+
 export class User {
   public id?: number;
 
@@ -8,4 +10,9 @@ export class User {
   public followers?: User[];
 
   public followings?: User[];
+
+  public upvote_posts?: Post[];
+
+  public downvote_posts?: Post[];
+
 }

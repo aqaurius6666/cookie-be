@@ -4,8 +4,8 @@ import { TypeormConfig } from '../typeormconfig';
 require('reflect-metadata');
 const opts: PostgresConnectionOptions = {
   ...TypeormConfig,
-  logger: new SimpleConsoleLogger(),
-  // logging: "all",
+  // logger: new SimpleConsoleLogger(),
+  logging: "all",
 };
 export const dataSource = new DataSource(opts);
 
