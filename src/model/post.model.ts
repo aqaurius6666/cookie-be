@@ -25,4 +25,6 @@ export class Post {
   public upvote?: number; // upvotes is the name of the column in the schema
 
   public downvote?: number; // downvotes is the name of the column in the schema
+
+  public cook_time?: number;
 }

@@ -33,6 +33,10 @@ const PostSchema = new EntitySchema<Post>({
       nullable: false,
       default: () => 'CURRENT_TIMESTAMP',
     },
+    cook_time: {
+      type: Number,
+      nullable: true,
+    },
   },
   relations: {
     upvote_users: {
