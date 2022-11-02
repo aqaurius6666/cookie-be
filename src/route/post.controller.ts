@@ -8,7 +8,7 @@ const router = Router();
 const postsRequest = joi.object<{
   id: number;
 }>({
-  id: joi.number(),
+  id: joi.number().required(),
 });
 router.get('/post-by-id', async (req: Request, res: Response) => {
   try {
