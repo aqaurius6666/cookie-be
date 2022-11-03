@@ -57,6 +57,99 @@
         ]
       }
     },
+    "/posts": {
+      "post": {
+        "operationId": "CookieService_CreatePosts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swaggerCreatePostsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/swaggerCreatePostsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Post"
+        ]
+      }
+    },
+    "/posts/{id}": {
+      "put": {
+        "operationId": "CookieService_UpdatePost",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swaggerUpdatePostResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "isReceipe": {
+                  "type": "boolean"
+                },
+                "tagIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "cookTime": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Post"
+        ]
+      }
+    },
     "/random-questions": {
       "get": {
         "operationId": "CookieService_RandomQuestions",
@@ -162,6 +255,49 @@
         }
       }
     },
+    "swaggerCreatePostsRequest": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "isReceipe": {
+          "type": "boolean"
+        },
+        "tagIds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "cookTime": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "swaggerCreatePostsResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/swaggerPost"
+        }
+      }
+    },
     "swaggerGetPostByIdResponse": {
       "type": "object",
       "properties": {
@@ -216,6 +352,10 @@
           "format": "int32"
         },
         "downvote": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cookTime": {
           "type": "integer",
           "format": "int32"
         }
@@ -290,6 +430,24 @@
         },
         "name": {
           "type": "string"
+        }
+      }
+    },
+    "swaggerUpdatePostResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/swaggerPost"
         }
       }
     },

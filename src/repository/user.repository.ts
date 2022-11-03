@@ -12,7 +12,7 @@ export class UserRepository {
       },
       relations: ['followers', 'followings'],
     });
-    if (!user) throw USER_NOT_FOUND;
+    if (user == null) throw USER_NOT_FOUND;
   }
 
   static async insertOne(user: User) {

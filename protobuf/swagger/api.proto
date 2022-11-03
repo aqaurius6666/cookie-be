@@ -58,6 +58,7 @@ message Post {
     string updated_at = 8;
     int32 upvote = 9;
     int32 downvote = 10;
+    int32 cook_time = 11;
 }
 
 message Question {
@@ -88,6 +89,26 @@ service CookieService {
     rpc SuggestionPosts(SuggestionPostsRequest) returns (SuggestionPostsResponse) {
         option (google.api.http) = {
             get: "/suggestion-posts"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "Post";
+        };
+    }
+
+    rpc CreatePosts(CreatePostsRequest) returns (CreatePostsResponse) {
+        option (google.api.http) = {
+            post: "/posts"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "Post";
+        };
+    }
+
+    rpc UpdatePost(UpdatePostRequest) returns (UpdatePostResponse) {
+        option (google.api.http) = {
+            put: "/posts/{id}"
+            body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             tags: "Post";
@@ -130,4 +151,35 @@ message RandomQuestionsResponse {
     int32 status = 2;
     string message = 3;
     repeated Question data = 4;
+}
+
+message CreatePostsRequest {
+    string title = 1;
+    string content = 2;
+    bool is_receipe = 3;
+    repeated int32 tag_ids = 4;
+    int32 cook_time = 5;
+}
+
+message CreatePostsResponse {
+    bool success = 1;
+    int32 status = 2;
+    string message = 3;
+    Post data = 4;
+}
+
+message UpdatePostRequest {
+    int32 id = 1;
+    string title = 2;
+    string content = 3;
+    bool is_receipe = 4;
+    repeated int32 tag_ids = 5;
+    int32 cook_time = 6;
+}
+
+message UpdatePostResponse {
+    bool success = 1;
+    int32 status = 2;
+    string message = 3;
+    Post data = 4;
 }

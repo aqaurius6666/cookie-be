@@ -27,4 +27,73 @@ router.get('/post-by-id', async (req: Request, res: Response) => {
   }
 });
 
+const createPostRequest = joi.object<{
+  title: string;
+  content: string;
+  isReceipe: boolean;
+  tagIds: number[];
+  cookTime: number;
+}>({
+  title: joi.string().required().min(6).max(512),
+  content: joi
+    .string()
+    .required()
+    .min(6)
+    .max(1024 * 1024),
+  isReceipe: joi.boolean().required().default(true),
+  tagIds: joi.array().items(joi.number().integer()).required(),
+  cookTime: joi.number().optional().default(0).min(1).integer(),
+});
+router.post('/posts', async (req: Request, res: Response) => {
+  try {
+    const valid = await createPostRequest.validateAsync({
+      ...req.body,
+    });
+    const post = await PostUseCase.createPost(valid);
+    response200(res, post);
+    return;
+  } catch (err: any) {
+    if (err instanceof StatusError) {
+      handleStatusError(res, err);
+      return;
+    }
+    response500(res, err?.message || err);
+  }
+});
+const updatePostRequest = joi.object<{
+  title: string;
+  content: string;
+  isReceipe: boolean;
+  tagIds: number[];
+  cookTime: number;
+  id: number;
+}>({
+  title: joi.string().optional().min(6).max(512),
+  content: joi
+    .string()
+    .optional()
+    .min(6)
+    .max(1024 * 1024),
+  isReceipe: joi.boolean().optional().default(true),
+  tagIds: joi.array().items(joi.number().integer()).optional(),
+  cookTime: joi.number().optional().default(0).min(1).integer(),
+  id: joi.number().required(),
+});
+router.put('/posts/:id', async (req: Request, res: Response) => {
+  try {
+    const valid = await updatePostRequest.validateAsync({
+      ...req.body,
+      ...req.params,
+    });
+    const post = await PostUseCase.updatePost(valid);
+    response200(res, post);
+    return;
+  } catch (err: any) {
+    if (err instanceof StatusError) {
+      handleStatusError(res, err);
+      return;
+    }
+    response500(res, err?.message || err);
+  }
+});
 export default router;

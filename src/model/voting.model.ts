@@ -1,4 +1,4 @@
 export enum VoteType {
-    UPVOTE = 'UPVOTE',
-    DOWNVOTE = 'DOWNVOTE',
+  UPVOTE = 'UPVOTE',
+  DOWNVOTE = 'DOWNVOTE',
 }

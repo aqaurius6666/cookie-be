@@ -13,11 +13,15 @@ export class PostRepository {
       },
       relations: ['author', 'tags'],
     });
-    if (!post) throw POST_NOT_FOUND;
+    if (post == null) throw POST_NOT_FOUND;
     return post;
   }
 
   static async insertOne(post: Post) {
+    return await this.repo.save(post);
+  }
+
+  static async update(post: Post) {
     return await this.repo.save(post);
   }
 
