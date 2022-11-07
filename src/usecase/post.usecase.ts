@@ -1,4 +1,4 @@
-import { Post, TAG_NOT_FOUND, User } from '../model';
+import { Post, ERR_TAG_NOT_FOUND, User } from '../model';
 import { PostRepository, TagRepository } from '../repository';
 import { VotingRepository } from '../repository/voting.repository';
 
@@ -21,7 +21,7 @@ export class PostUseCase {
     cookTime: number;
   }) {
     const tags = await this.tagRepo.findByIds(post.tagIds);
-    if (tags?.length !== post.tagIds.length) throw TAG_NOT_FOUND;
+    if (tags?.length !== post.tagIds.length) throw ERR_TAG_NOT_FOUND;
     const sPost = new Post();
     sPost.title = post.title;
     sPost.content = post.content;
@@ -47,7 +47,7 @@ export class PostUseCase {
     const sPost = await this.postRepo.findById(post.id);
     if (post.tagIds) {
       const tags = await this.tagRepo.findByIds(post.tagIds);
-      if (tags?.length !== post.tagIds.length) throw TAG_NOT_FOUND;
+      if (tags?.length !== post.tagIds.length) throw ERR_TAG_NOT_FOUND;
       sPost.tags = tags;
     }
     sPost.title = post.title;
@@ -66,7 +66,7 @@ export class PostUseCase {
     tags: number[];
     limit: number;
     offset: number;
-  }) : Promise<Post[]>{
+  }): Promise<Post[]> {
     const posts = await this.postRepo.getSuggestionPosts({
       tags,
       limit,
@@ -75,8 +75,8 @@ export class PostUseCase {
     const votings = await this.votingRepo.getVoteCounts(
       posts.map((e) => e.id ?? -1) // e always has id
     ); // get vote counts for each post
-    return posts.map((post, index) : Post => {
-      return{ ...post, ...votings[index] }
+    return posts.map((post, index): Post => {
+      return { ...post, ...votings[index] };
     }); // merge vote counts with post
   }
 
@@ -84,5 +84,23 @@ export class PostUseCase {
     const post = await this.postRepo.findById(id);
     const voting = await this.votingRepo.getVoteCount(id); // get vote counts for post
     return { ...post, ...voting }; // merge vote counts with post
+  }
+
+  static async listPosts(options: {
+    offset: number;
+    limit: number;
+  }): Promise<Post[]> {
+    const posts = await this.postRepo.selectPosts(options);
+    const votings = await this.votingRepo.getVoteCounts(
+      posts.map((e) => e.id ?? -1)
+    );
+    return posts.map((post, index): Post => {
+      return { ...post, ...votings[index] };
+    });
+  }
+
+  static async countPosts(): Promise<number> {
+    const total = await this.postRepo.count();
+    return total;
   }
 }

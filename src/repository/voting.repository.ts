@@ -1,5 +1,10 @@
 import { In } from 'typeorm';
-import { Post, POST_NOT_FOUND, USER_NOT_FOUND, VoteType } from '../model';
+import {
+  Post,
+  ERR_POST_NOT_FOUND,
+  ERR_USER_NOT_FOUND,
+  VoteType,
+} from '../model';
 import PostSchema from '../schema/post.schema';
 import UserSchema from '../schema/user.schema';
 import { dataSource } from './repository';
@@ -22,10 +27,12 @@ export class VotingRepository {
         },
       }),
     ]);
-    if (user === null) throw USER_NOT_FOUND;
-    if (post === null) throw POST_NOT_FOUND;
+    if (user === null) throw ERR_USER_NOT_FOUND;
+    if (post === null) throw ERR_POST_NOT_FOUND;
     if (voteType === VoteType.UPVOTE) {
-      user.downvote_posts = user.downvote_posts?.filter((e) => e.id !== post.id); // remove post from downvote_posts if it exists
+      user.downvote_posts = user.downvote_posts?.filter(
+        (e) => e.id !== post.id
+      ); // remove post from downvote_posts if it exists
       user.upvote_posts?.push(post); // add post to upvote_posts if it doesn't exist
       return await this.userRepo.save(post);
     } else {
@@ -50,7 +57,7 @@ export class VotingRepository {
       },
       relations: ['upvote_users', 'downvote_users'],
     });
-    if (post == null) throw POST_NOT_FOUND;
+    if (post == null) throw ERR_POST_NOT_FOUND;
     return {
       upvote: post.upvote_users?.length ?? 0,
       downvote: post.downvote_users?.length ?? 0,
@@ -84,8 +91,8 @@ export class VotingRepository {
         },
       }),
     ]);
-    if (user == null) throw USER_NOT_FOUND;
-    if (post == null) throw POST_NOT_FOUND;
+    if (user == null) throw ERR_USER_NOT_FOUND;
+    if (post == null) throw ERR_POST_NOT_FOUND;
     return {
       upvote: user.upvote_posts?.some((e) => e.id === post.id) ?? false,
       downvote: user.downvote_posts?.some((e) => e.id === post.id) ?? false,

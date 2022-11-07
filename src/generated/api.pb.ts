@@ -15,6 +15,12 @@ export type Tag = {
   name?: string;
 };
 
+export type Pagination = {
+  offset?: number;
+  limit?: number;
+  total?: number;
+};
+
 export type Post = {
   id?: number;
   title?: string;
@@ -101,6 +107,23 @@ export type UpdatePostResponse = {
   data?: Post;
 };
 
+export type ListPostsRequest = {
+  limit?: number;
+  offset?: number;
+};
+
+export type ListPostsResponsePostPagination = {
+  pagination?: Pagination;
+  posts?: Post[];
+};
+
+export type ListPostsResponse = {
+  success?: boolean;
+  status?: number;
+  message?: string;
+  data?: ListPostsResponsePostPagination;
+};
+
 export class CookieService {
   static GetPostById(
     req: GetPostByIdRequest,
@@ -146,6 +169,15 @@ export class CookieService {
     return fm.fetchReq<UpdatePostRequest, UpdatePostResponse>(
       `/posts/${req['id']}`,
       { ...initReq, method: 'PUT', body: JSON.stringify(req, fm.replacer) }
+    );
+  }
+  static ListPosts(
+    req: ListPostsRequest,
+    initReq?: fm.InitReq
+  ): Promise<ListPostsResponse> {
+    return fm.fetchReq<ListPostsRequest, ListPostsResponse>(
+      `/posts?${fm.renderURLSearchParams(req, [])}`,
+      { ...initReq, method: 'GET' }
     );
   }
 }

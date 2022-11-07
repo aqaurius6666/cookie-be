@@ -1,5 +1,5 @@
 import { In } from 'typeorm';
-import { Post, POST_NOT_FOUND } from '../model';
+import { Post, ERR_POST_NOT_FOUND } from '../model';
 import PostSchema from '../schema/post.schema';
 import { dataSource } from './repository';
 
@@ -13,7 +13,7 @@ export class PostRepository {
       },
       relations: ['author', 'tags'],
     });
-    if (post == null) throw POST_NOT_FOUND;
+    if (post == null) throw ERR_POST_NOT_FOUND;
     return post;
   }
 
@@ -48,5 +48,23 @@ export class PostRepository {
       },
       relations: ['author', 'tags'],
     });
+  }
+
+  static async selectPosts({
+    offset,
+    limit,
+  }: {
+    offset: number;
+    limit: number;
+  }): Promise<Post[]> {
+    return await this.repo.find({
+      relations: ['author', 'tags'],
+      skip: offset,
+      take: limit,
+    });
+  }
+
+  static async count(): Promise<number> {
+    return await this.repo.count();
   }
 }

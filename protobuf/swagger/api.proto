@@ -46,7 +46,11 @@ message Tag {
     int32 id = 1;
     string name = 2;
 }
-
+message Pagination {
+    int32 offset = 1;
+    int32 limit = 2;
+    int32 total = 3;
+}
 message Post {
     int32 id = 1;
     string title = 2;
@@ -109,6 +113,15 @@ service CookieService {
         option (google.api.http) = {
             put: "/posts/{id}"
             body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "Post";
+        };
+    }
+
+    rpc ListPosts(ListPostsRequest) returns (ListPostsResponse) {
+        option (google.api.http) = {
+            get: "/posts"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             tags: "Post";
@@ -182,4 +195,20 @@ message UpdatePostResponse {
     int32 status = 2;
     string message = 3;
     Post data = 4;
+}
+
+message ListPostsRequest {
+    int32 limit = 1;
+    int32 offset = 2;
+}
+
+message ListPostsResponse {
+    bool success = 1;
+    int32 status = 2;
+    string message = 3;
+    message PostPagination {
+        Pagination pagination = 1;
+        repeated Post posts = 2;
+    }
+    PostPagination data = 4;
 }

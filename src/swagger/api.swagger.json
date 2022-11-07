@@ -15,16 +15,9 @@
     }
   ],
   "basePath": "/api",
-  "schemes": [
-    "https",
-    "http"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "schemes": ["https", "http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
     "/post-by-id": {
       "get": {
@@ -52,12 +45,44 @@
             "format": "int32"
           }
         ],
-        "tags": [
-          "Post"
-        ]
+        "tags": ["Post"]
       }
     },
     "/posts": {
+      "get": {
+        "operationId": "CookieService_ListPosts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swaggerListPostsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": ["Post"]
+      },
       "post": {
         "operationId": "CookieService_CreatePosts",
         "responses": {
@@ -84,9 +109,7 @@
             }
           }
         ],
-        "tags": [
-          "Post"
-        ]
+        "tags": ["Post"]
       }
     },
     "/posts/{id}": {
@@ -145,9 +168,7 @@
             }
           }
         ],
-        "tags": [
-          "Post"
-        ]
+        "tags": ["Post"]
       }
     },
     "/random-questions": {
@@ -176,9 +197,7 @@
             "format": "int32"
           }
         ],
-        "tags": [
-          "Post"
-        ]
+        "tags": ["Post"]
       }
     },
     "/suggestion-posts": {
@@ -221,13 +240,25 @@
             "format": "int32"
           }
         ],
-        "tags": [
-          "Post"
-        ]
+        "tags": ["Post"]
       }
     }
   },
   "definitions": {
+    "ListPostsResponsePostPagination": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/swaggerPagination"
+        },
+        "posts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/swaggerPost"
+          }
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -313,6 +344,41 @@
         },
         "data": {
           "$ref": "#/definitions/swaggerPost"
+        }
+      }
+    },
+    "swaggerListPostsResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/ListPostsResponsePostPagination"
+        }
+      }
+    },
+    "swaggerPagination": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },

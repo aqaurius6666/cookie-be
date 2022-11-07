@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import joi from 'joi';
 import { StatusError } from '../model';
 import { PostUseCase } from '../usecase/post.usecase';
+import { buildPaginationResponse } from '../util/pagination';
 import { handleStatusError, response200, response500 } from '../util/response';
 const router = Router();
 
@@ -87,6 +88,37 @@ router.put('/posts/:id', async (req: Request, res: Response) => {
     });
     const post = await PostUseCase.updatePost(valid);
     response200(res, post);
+    return;
+  } catch (err: any) {
+    if (err instanceof StatusError) {
+      handleStatusError(res, err);
+      return;
+    }
+    response500(res, err?.message || err);
+  }
+});
+
+const getPostsRequest = joi.object<{
+  offset: number;
+  limit: number;
+}>({
+  limit: joi.number().optional().default(5).integer(),
+  offset: joi.number().optional().default(0).integer(),
+});
+
+router.get('/posts', async (req: Request, res: Response) => {
+  try {
+    const valid = await getPostsRequest.validateAsync({
+      ...req.body,
+    });
+    const [total, posts] = await Promise.all([
+      PostUseCase.countPosts(),
+      PostUseCase.listPosts(valid),
+    ]);
+    response200(res, {
+      pagination: buildPaginationResponse({ ...valid, total }),
+      posts,
+    });
     return;
   } catch (err: any) {
     if (err instanceof StatusError) {

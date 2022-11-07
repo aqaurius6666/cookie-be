@@ -1,4 +1,4 @@
-import { User, USER_NOT_FOUND } from '../model';
+import { User, ERR_USER_NOT_FOUND } from '../model';
 import UserSchema from '../schema/user.schema';
 import { dataSource } from './repository';
 
@@ -12,7 +12,7 @@ export class UserRepository {
       },
       relations: ['followers', 'followings'],
     });
-    if (user == null) throw USER_NOT_FOUND;
+    if (user == null) throw ERR_USER_NOT_FOUND;
   }
 
   static async insertOne(user: User) {

@@ -1,5 +1,5 @@
 import { shuffle } from 'radash';
-import { NOT_ENOUGH_QUESTION, User } from '../model';
+import { ERR_NOT_ENOUGH_QUESTION, User } from '../model';
 import { QuestionRepository } from '../repository';
 
 export class QuestionUseCase {
@@ -17,7 +17,7 @@ export class QuestionUseCase {
     const ids = await this.questionRepo.getListAvailableId();
 
     const randomElement = (arr: number[], n: number) => {
-      if (arr.length === 0 || n > arr.length) throw NOT_ENOUGH_QUESTION;
+      if (arr.length === 0 || n > arr.length) throw ERR_NOT_ENOUGH_QUESTION;
 
       arr = shuffle(arr);
       return arr.slice(0, n);
