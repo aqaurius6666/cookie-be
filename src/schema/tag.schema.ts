@@ -14,6 +14,11 @@ const TagSchema = new EntitySchema<Tag>({
       type: String,
       nullable: false,
     },
+    is_required: {
+      type: Boolean,
+      nullable: false,
+      default: false,
+    },
   },
   relations: {
     posts: {

@@ -15,16 +15,9 @@
     }
   ],
   "basePath": "/api",
-  "schemes": [
-    "https",
-    "http"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "schemes": ["https", "http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
     "/post-by-id": {
       "get": {
@@ -52,9 +45,7 @@
             "format": "int32"
           }
         ],
-        "tags": [
-          "Post"
-        ]
+        "tags": ["Post"]
       }
     },
     "/posts": {
@@ -90,9 +81,7 @@
             "format": "int32"
           }
         ],
-        "tags": [
-          "Post"
-        ]
+        "tags": ["Post"]
       },
       "post": {
         "operationId": "CookieService_CreatePosts",
@@ -120,9 +109,7 @@
             }
           }
         ],
-        "tags": [
-          "Post"
-        ]
+        "tags": ["Post"]
       }
     },
     "/posts/{id}": {
@@ -181,9 +168,7 @@
             }
           }
         ],
-        "tags": [
-          "Post"
-        ]
+        "tags": ["Post"]
       }
     },
     "/random-questions": {
@@ -212,9 +197,7 @@
             "format": "int32"
           }
         ],
-        "tags": [
-          "Post"
-        ]
+        "tags": ["Post"]
       }
     },
     "/suggestion-posts": {
@@ -257,9 +240,7 @@
             "format": "int32"
           }
         ],
-        "tags": [
-          "Post"
-        ]
+        "tags": ["Post"]
       }
     },
     "/upload/presigned-upload": {
@@ -289,9 +270,7 @@
             }
           }
         ],
-        "tags": [
-          "Upload"
-        ]
+        "tags": ["Upload"]
       }
     }
   },
@@ -584,6 +563,9 @@
         },
         "name": {
           "type": "string"
+        },
+        "isRequired": {
+          "type": "boolean"
         }
       }
     },

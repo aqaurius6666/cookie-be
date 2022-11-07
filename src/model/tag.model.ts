@@ -5,5 +5,7 @@ export class Tag {
 
   public name?: string;
 
+  public is_required?: boolean;
+
   public posts?: Post[];
 }
