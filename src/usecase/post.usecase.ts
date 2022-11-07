@@ -67,17 +67,21 @@ export class PostUseCase {
     limit: number;
     offset: number;
   }): Promise<Post[]> {
+    // append unknown tag
+    const unknownTag = await this.tagRepo.findByName('unknown');
+    tags = [...tags, unknownTag?.id ?? -1];
     const posts = await this.postRepo.getSuggestionPosts({
       tags,
-      limit,
-      offset,
     });
     const votings = await this.votingRepo.getVoteCounts(
       posts.map((e) => e.id ?? -1) // e always has id
     ); // get vote counts for each post
-    return posts.map((post, index): Post => {
-      return { ...post, ...votings[index] };
-    }); // merge vote counts with post
+    return posts
+      .map((post, index): Post => {
+        return { ...post, ...votings[index] }; // merge vote counts with post
+      })
+      .sort((left, right) => (right.upvote ?? 0) - (left.upvote ?? 0))
+      .slice(offset, offset + limit);
   }
 
   static async getPostById(id: number): Promise<Post> {

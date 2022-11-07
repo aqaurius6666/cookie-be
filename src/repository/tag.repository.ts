@@ -12,4 +12,12 @@ export class TagRepository {
       },
     });
   }
+
+  static async findByName(name: string) {
+    return await this.repo.findOne({
+      where: {
+        name,
+      },
+    });
+  }
 }
