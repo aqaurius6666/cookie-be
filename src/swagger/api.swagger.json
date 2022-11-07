@@ -15,9 +15,16 @@
     }
   ],
   "basePath": "/api",
-  "schemes": ["https", "http"],
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
     "/post-by-id": {
       "get": {
@@ -45,7 +52,9 @@
             "format": "int32"
           }
         ],
-        "tags": ["Post"]
+        "tags": [
+          "Post"
+        ]
       }
     },
     "/posts": {
@@ -81,7 +90,9 @@
             "format": "int32"
           }
         ],
-        "tags": ["Post"]
+        "tags": [
+          "Post"
+        ]
       },
       "post": {
         "operationId": "CookieService_CreatePosts",
@@ -109,7 +120,9 @@
             }
           }
         ],
-        "tags": ["Post"]
+        "tags": [
+          "Post"
+        ]
       }
     },
     "/posts/{id}": {
@@ -168,7 +181,9 @@
             }
           }
         ],
-        "tags": ["Post"]
+        "tags": [
+          "Post"
+        ]
       }
     },
     "/random-questions": {
@@ -197,7 +212,9 @@
             "format": "int32"
           }
         ],
-        "tags": ["Post"]
+        "tags": [
+          "Post"
+        ]
       }
     },
     "/suggestion-posts": {
@@ -240,7 +257,41 @@
             "format": "int32"
           }
         ],
-        "tags": ["Post"]
+        "tags": [
+          "Post"
+        ]
+      }
+    },
+    "/upload/presigned-upload": {
+      "post": {
+        "operationId": "CookieService_GetUploadUrl",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swaggerGetUploadUrlResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/swaggerGetUploadUrlRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Upload"
+        ]
       }
     }
   },
@@ -256,6 +307,17 @@
           "items": {
             "$ref": "#/definitions/swaggerPost"
           }
+        }
+      }
+    },
+    "UploadUrlUploadHeader": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
         }
       }
     },
@@ -344,6 +406,32 @@
         },
         "data": {
           "$ref": "#/definitions/swaggerPost"
+        }
+      }
+    },
+    "swaggerGetUploadUrlRequest": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string"
+        }
+      }
+    },
+    "swaggerGetUploadUrlResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/swaggerUploadUrl"
         }
       }
     },
@@ -514,6 +602,20 @@
         },
         "data": {
           "$ref": "#/definitions/swaggerPost"
+        }
+      }
+    },
+    "swaggerUploadUrl": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UploadUrlUploadHeader"
+          }
         }
       }
     },

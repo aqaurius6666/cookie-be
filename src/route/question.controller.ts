@@ -1,8 +1,7 @@
 import { Request, Response, Router } from 'express';
 import joi from 'joi';
 import { StatusError } from '../model';
-import { QuestionUseCase } from '../usecase';
-import { PostUseCase } from '../usecase/post.usecase';
+import { QuestionUseCase, PostUseCase } from '../usecase';
 import { handleStatusError, response200, response500 } from '../util/response';
 const router = Router();
 

@@ -71,6 +71,15 @@ message Question {
     repeated Tag tags = 3;
 }
 
+message UploadUrl {
+    string url = 1;
+    message UploadHeader {
+        string key = 1;
+        string value = 2;
+    }
+    repeated UploadHeader fields = 2; 
+}
+
 service CookieService {
     rpc GetPostById(GetPostByIdRequest) returns (GetPostByIdResponse) {
         option (google.api.http) = {
@@ -125,6 +134,16 @@ service CookieService {
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             tags: "Post";
+        };
+    }
+
+    rpc GetUploadUrl(GetUploadUrlRequest) returns (GetUploadUrlResponse) {
+        option (google.api.http) = {
+            post: "/upload/presigned-upload"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "Upload";
         };
     }
 }
@@ -211,4 +230,15 @@ message ListPostsResponse {
         repeated Post posts = 2;
     }
     PostPagination data = 4;
+}
+
+message GetUploadUrlRequest {
+    string file_name = 1;
+}
+
+message GetUploadUrlResponse {
+    bool success = 1;
+    int32 status = 2;
+    string message = 3;
+    UploadUrl data = 4;
 }
