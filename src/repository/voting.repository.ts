@@ -71,10 +71,14 @@ export class VotingRepository {
       },
       relations: ['upvote_users', 'downvote_users'],
     });
-    return postVotes.map((post) => ({
-      upvote: post.upvote_users?.length ?? 0,
-      downvote: post.downvote_users?.length ?? 0,
-    }));
+    return postIds.map((id) => {
+      const post = postVotes.find((e) => e.id === id);
+      if (post == null) throw ERR_POST_NOT_FOUND;
+      return {
+        upvote: post.upvote_users?.length ?? 0,
+        downvote: post.downvote_users?.length ?? 0,
+      };
+    });
   }
 
   static async getVoteStatus(userId: number, postId: number) {
