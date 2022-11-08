@@ -21,6 +21,21 @@ const TagSchema = new EntitySchema<Tag>({
     },
   },
   relations: {
+    questions: {
+      type: 'many-to-many',
+      target: 'Question',
+      joinTable: {
+        name: 'question_tag',
+        joinColumn: {
+          name: 'tag_id',
+          referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+          name: 'question_id',
+          referencedColumnName: 'id',
+        },
+      },
+    },
     posts: {
       type: 'many-to-many',
       target: 'Post',

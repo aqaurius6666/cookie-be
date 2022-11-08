@@ -1,4 +1,5 @@
 import { Post } from './post.model';
+import { Question } from './question.model';
 
 export class Tag {
   public id?: number;
@@ -8,4 +9,6 @@ export class Tag {
   public is_required?: boolean;
 
   public posts?: Post[];
+
+  public questions?: Question[];
 }
