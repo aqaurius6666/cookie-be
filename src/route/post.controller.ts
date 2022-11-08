@@ -50,7 +50,8 @@ router.post('/posts', async (req: Request, res: Response) => {
     const valid = await createPostRequest.validateAsync({
       ...req.body,
     });
-    const post = await PostUseCase.createPost(valid);
+    const userId = 2;
+    const post = await PostUseCase.createPost(valid, userId);
     response200(res, post);
     return;
   } catch (err: any) {
@@ -86,7 +87,8 @@ router.put('/posts/:id', async (req: Request, res: Response) => {
       ...req.body,
       ...req.params,
     });
-    const post = await PostUseCase.updatePost(valid);
+    const userId = 2;
+    const post = await PostUseCase.updatePost(valid, userId);
     response200(res, post);
     return;
   } catch (err: any) {
@@ -112,8 +114,11 @@ router.get('/posts', async (req: Request, res: Response) => {
       ...req.body,
     });
     const [total, posts] = await Promise.all([
-      PostUseCase.countPosts(),
-      PostUseCase.listPosts(valid),
+      PostUseCase.countPosts({ userId: 2 }),
+      PostUseCase.listPosts({
+        ...valid,
+        userId: 2,
+      }),
     ]);
     response200(res, {
       pagination: buildPaginationResponse({ ...valid, total }),

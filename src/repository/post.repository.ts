@@ -45,18 +45,42 @@ export class PostRepository {
   static async selectPosts({
     offset,
     limit,
+    userId,
   }: {
     offset: number;
     limit: number;
+    userId?: number;
   }): Promise<Post[]> {
+    let whereClause = {};
+    if (userId) {
+      whereClause = {
+        ...whereClause,
+        author: {
+          id: userId,
+        },
+      };
+    }
     return await this.repo.find({
+      where: whereClause,
       relations: ['author', 'tags'],
       skip: offset,
       take: limit,
     });
   }
 
-  static async count(): Promise<number> {
-    return await this.repo.count();
+  static async count(options: { userId?: number }): Promise<number> {
+    let whereClause = {};
+    if (options.userId) {
+      whereClause = {
+        ...whereClause,
+        author: {
+          id: options.userId,
+        },
+      };
+    }
+    return await this.repo.count({
+      where: whereClause,
+      relations: ['author'],
+    });
   }
 }
