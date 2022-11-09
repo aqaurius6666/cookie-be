@@ -46,7 +46,6 @@ message Tag {
     int32 id = 1;
     string name = 2;
     bool is_required = 3;
-    repeated Question questions = 4;
 }
 message Pagination {
     int32 offset = 1;

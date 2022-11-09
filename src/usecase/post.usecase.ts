@@ -72,8 +72,9 @@ export class PostUseCase {
     userId: number
   ) {
     const sPost = await this.postRepo.findById(post.id);
-    if (post.tagIds.length === 0) {
+    if (post.tagIds.length !== 0) {
       const tags = await this.tagRepo.findByIds(post.tagIds);
+      console.log(tags);
       if (tags?.length !== post.tagIds.length) throw ERR_TAG_NOT_FOUND;
       sPost.tags = tags;
     }

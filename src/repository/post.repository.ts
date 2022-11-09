@@ -22,6 +22,7 @@ export class PostRepository {
   }
 
   static async update(post: Post) {
+    console.log(post);
     return await this.repo.save(post);
   }
 
