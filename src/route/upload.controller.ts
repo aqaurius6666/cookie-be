@@ -1,8 +1,7 @@
 import { Request, Response, Router } from 'express';
 import joi from 'joi';
-import { StatusError } from '../model';
 import { UploadUsecase } from '../usecase';
-import { handleStatusError, response200, response500 } from '../util/response';
+import { handleResponseCatchError, response200 } from '../util/response';
 const router = Router();
 
 const presignedUploadUrlRequest = joi.object<{
@@ -22,11 +21,7 @@ router.post('/upload/presigned-upload', async (req: Request, res: Response) => {
     response200(res, presignedData);
     return;
   } catch (err: any) {
-    if (err instanceof StatusError) {
-      handleStatusError(res, err);
-      return;
-    }
-    response500(res, err?.message || err);
+    handleResponseCatchError(res, err);
   }
 });
 

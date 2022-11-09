@@ -1,8 +1,7 @@
 import { Request, Response, Router } from 'express';
 import joi from 'joi';
-import { StatusError } from '../model';
 import { QuestionUseCase, PostUseCase } from '../usecase';
-import { handleStatusError, response200, response500 } from '../util/response';
+import { handleResponseCatchError, response200 } from '../util/response';
 const router = Router();
 
 const randomQuestionRequest = joi.object<{
@@ -20,11 +19,7 @@ router.get('/random-questions', async (req: Request, res: Response) => {
     response200(res, question);
     return;
   } catch (err: any) {
-    if (err instanceof StatusError) {
-      handleStatusError(res, err);
-      return;
-    }
-    response500(res, err?.message || err);
+    handleResponseCatchError(res, err);
   }
 });
 
@@ -46,11 +41,7 @@ router.get('/suggestion-posts', async (req: Request, res: Response) => {
     response200(res, posts);
     return;
   } catch (err: any) {
-    if (err instanceof StatusError) {
-      handleStatusError(res, err);
-      return;
-    }
-    response500(res, err?.message || err);
+    handleResponseCatchError(res, err);
   }
 });
 

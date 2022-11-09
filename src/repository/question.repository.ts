@@ -24,6 +24,17 @@ export class QuestionRepository {
     });
   }
 
+  static async findByTagIds(tagIds: number[]) {
+    return await this.repo.find({
+      where: {
+        tags: {
+          id: In(tagIds),
+        },
+      },
+      relations: ['tags'],
+    });
+  }
+
   static async insertOne(question: Question) {
     return await this.repo.save(question);
   }

@@ -491,6 +491,12 @@
         "cookTime": {
           "type": "integer",
           "format": "int32"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/swaggerQuestion"
+          }
         }
       }
     },

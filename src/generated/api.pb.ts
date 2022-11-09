@@ -35,6 +35,7 @@ export type Post = {
   upvote?: number;
   downvote?: number;
   cookTime?: number;
+  questions?: Question[];
 };
 
 export type Question = {

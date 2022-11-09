@@ -1,9 +1,8 @@
 import { Request, Response, Router } from 'express';
 import joi from 'joi';
-import { StatusError } from '../model';
 import { PostUseCase } from '../usecase';
 import { buildPaginationResponse } from '../util/pagination';
-import { handleStatusError, response200, response500 } from '../util/response';
+import { handleResponseCatchError, response200 } from '../util/response';
 const router = Router();
 
 const postsRequest = joi.object<{
@@ -16,15 +15,11 @@ router.get('/post-by-id', async (req: Request, res: Response) => {
     const valid = await postsRequest.validateAsync({
       ...req.query,
     });
-    const post = await PostUseCase.getPostById(valid.id);
+    const post = await PostUseCase.getPostWithQuestionsById(valid.id);
     response200(res, post);
     return;
   } catch (err: any) {
-    if (err instanceof StatusError) {
-      handleStatusError(res, err);
-      return;
-    }
-    response500(res, err?.message || err);
+    handleResponseCatchError(res, err);
   }
 });
 
@@ -55,11 +50,7 @@ router.post('/posts', async (req: Request, res: Response) => {
     response200(res, post);
     return;
   } catch (err: any) {
-    if (err instanceof StatusError) {
-      handleStatusError(res, err);
-      return;
-    }
-    response500(res, err?.message || err);
+    handleResponseCatchError(res, err);
   }
 });
 const updatePostRequest = joi.object<{
@@ -92,11 +83,7 @@ router.put('/posts/:id', async (req: Request, res: Response) => {
     response200(res, post);
     return;
   } catch (err: any) {
-    if (err instanceof StatusError) {
-      handleStatusError(res, err);
-      return;
-    }
-    response500(res, err?.message || err);
+    handleResponseCatchError(res, err);
   }
 });
 
@@ -126,11 +113,7 @@ router.get('/posts', async (req: Request, res: Response) => {
     });
     return;
   } catch (err: any) {
-    if (err instanceof StatusError) {
-      handleStatusError(res, err);
-      return;
-    }
-    response500(res, err?.message || err);
+    handleResponseCatchError(res, err);
   }
 });
 export default router;

@@ -46,3 +46,11 @@ export const handleStatusError = (res: Response, err: StatusError) => {
       break;
   }
 };
+
+export const handleResponseCatchError = (res: Response, err: any) => {
+  if (err instanceof StatusError) {
+    handleStatusError(res, err);
+    return;
+  }
+  response500(res, err?.message || err);
+};

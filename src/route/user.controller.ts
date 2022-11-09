@@ -1,5 +1,5 @@
 import { UserUsecase } from '../usecase';
-import { response500, response200 } from '../util/response';
+import { response200, handleResponseCatchError } from '../util/response';
 import { Router } from 'express';
 import { PostUseCase } from '../usecase/post.usecase';
 const router = Router();
@@ -10,7 +10,7 @@ router.get('/user', async (req, res) => {
     response200(res, user);
     return;
   } catch (err: any) {
-    response500(res, err?.message || err);
+    handleResponseCatchError(res, err);
   }
 });
 
@@ -24,7 +24,7 @@ router.get('/get-user', async (req, res) => {
     response200(res, user);
     return;
   } catch (err: any) {
-    response500(res, err?.message || err);
+    handleResponseCatchError(res, err);
   }
 });
 
@@ -34,7 +34,7 @@ router.get('/post', async (req, res) => {
     response200(res, post);
     return;
   } catch (err: any) {
-    response500(res, err?.message || err);
+    handleResponseCatchError(res, err);
   }
 });
 

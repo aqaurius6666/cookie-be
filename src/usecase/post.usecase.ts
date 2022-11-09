@@ -1,16 +1,37 @@
-import { Post, ERR_TAG_NOT_FOUND, User } from '../model';
-import { PostRepository, TagRepository } from '../repository';
-import { VotingRepository } from '../repository/voting.repository';
+import { Post, ERR_TAG_NOT_FOUND, User, PostWithQuestions } from '../model';
+import {
+  PostRepository,
+  QuestionRepository,
+  TagRepository,
+  VotingRepository,
+} from '../repository';
 
 export class PostUseCase {
   private static readonly postRepo = PostRepository;
   private static readonly votingRepo = VotingRepository;
   private static readonly tagRepo = TagRepository;
+  private static readonly questionRepo = QuestionRepository;
 
   static async findOne(id: number): Promise<Post> {
     const post = await this.postRepo.findById(id);
     const voting = await this.votingRepo.getVoteCount(id); // get vote counts for post
     return { ...post, ...voting }; // merge vote counts with post
+  }
+
+  static async getPostWithQuestionsById(
+    id: number
+  ): Promise<PostWithQuestions> {
+    const post = await this.postRepo.findById(id);
+    const voting = await this.votingRepo.getVoteCount(id);
+    const tagIds = post?.tags?.map((e) => e.id!) ?? [];
+    let questions = await this.questionRepo.findByTagIds(tagIds);
+    questions = questions.map((question) => {
+      return {
+        ...question,
+        tags: question?.tags?.filter((tag) => tagIds.includes(tag.id!)) ?? [],
+      };
+    });
+    return { ...post, ...voting, questions };
   }
 
   static async createPost(
@@ -51,7 +72,7 @@ export class PostUseCase {
     userId: number
   ) {
     const sPost = await this.postRepo.findById(post.id);
-    if (post.tagIds) {
+    if (post.tagIds.length === 0) {
       const tags = await this.tagRepo.findByIds(post.tagIds);
       if (tags?.length !== post.tagIds.length) throw ERR_TAG_NOT_FOUND;
       sPost.tags = tags;
