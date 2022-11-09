@@ -47,10 +47,12 @@ export class PostRepository {
     offset,
     limit,
     userId,
+    sortByLatest,
   }: {
     offset: number;
     limit: number;
     userId?: number;
+    sortByLatest?: boolean;
   }): Promise<Post[]> {
     let whereClause = {};
     if (userId) {
@@ -64,6 +66,9 @@ export class PostRepository {
     return await this.repo.find({
       where: whereClause,
       relations: ['author', 'tags'],
+      order: {
+        created_at: sortByLatest ? 'DESC' : undefined,
+      },
       skip: offset,
       take: limit,
     });

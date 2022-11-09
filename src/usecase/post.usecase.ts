@@ -123,7 +123,10 @@ export class PostUseCase {
     limit: number;
     userId?: number;
   }): Promise<Post[]> {
-    const posts = await this.postRepo.selectPosts(options);
+    const posts = await this.postRepo.selectPosts({
+      ...options,
+      sortByLatest: true,
+    });
     const votings = await this.votingRepo.getVoteCounts(
       posts.map((e) => e.id ?? -1)
     );
