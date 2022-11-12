@@ -99,6 +99,7 @@ router.get('/posts/me', async (req: Request, res: Response) => {
   try {
     const valid = await getPostsRequest.validateAsync({
       ...req.body,
+      ...req.query,
     });
     const [total, posts] = await Promise.all([
       PostUseCase.countPosts({ userId: 2 }),
@@ -121,6 +122,7 @@ router.get('/posts', async (req: Request, res: Response) => {
   try {
     const valid = await getPostsRequest.validateAsync({
       ...req.body,
+      ...req.query,
     });
     const [total, posts] = await Promise.all([
       PostUseCase.countPosts({}),

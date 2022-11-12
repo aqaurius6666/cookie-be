@@ -12,8 +12,8 @@ const randomQuestionRequest = joi.object<{
 router.get('/random-questions', async (req: Request, res: Response) => {
   try {
     const valid = await randomQuestionRequest.validateAsync({
-      ...req.query,
       ...req.body,
+      ...req.query,
     });
     const question = await QuestionUseCase.getRandomQuestion(valid.number);
     response200(res, question);
@@ -35,6 +35,7 @@ const suggestionPostsRequest = joi.object<{
 router.get('/suggestion-posts', async (req: Request, res: Response) => {
   try {
     const valid = await suggestionPostsRequest.validateAsync({
+      ...req.body,
       ...req.query,
     });
     const posts = await PostUseCase.getSuggestionPosts(valid);

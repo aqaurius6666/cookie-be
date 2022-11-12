@@ -1,3 +1,4 @@
+import logger from '../logger';
 import { Post, ERR_TAG_NOT_FOUND, User, PostWithQuestions } from '../model';
 import {
   PostRepository,
@@ -123,6 +124,7 @@ export class PostUseCase {
     limit: number;
     userId?: number;
   }): Promise<Post[]> {
+    logger.info(options);
     const posts = await this.postRepo.selectPosts({
       ...options,
       sortByLatest: true,
