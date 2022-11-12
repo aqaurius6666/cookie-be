@@ -112,6 +112,42 @@
         "tags": ["Post"]
       }
     },
+    "/posts/me": {
+      "get": {
+        "operationId": "CookieService_ListPostsMe",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swaggerListPostsMeResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": ["Post"]
+      }
+    },
     "/posts/{id}": {
       "put": {
         "operationId": "CookieService_UpdatePost",
@@ -275,20 +311,6 @@
     }
   },
   "definitions": {
-    "ListPostsResponsePostPagination": {
-      "type": "object",
-      "properties": {
-        "pagination": {
-          "$ref": "#/definitions/swaggerPagination"
-        },
-        "posts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/swaggerPost"
-          }
-        }
-      }
-    },
     "UploadUrlUploadHeader": {
       "type": "object",
       "properties": {
@@ -414,6 +436,38 @@
         }
       }
     },
+    "swaggerListPostsMeResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/swaggerListPostsMeResponsePostPagination"
+        }
+      }
+    },
+    "swaggerListPostsMeResponsePostPagination": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/swaggerPagination"
+        },
+        "posts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/swaggerPost"
+          }
+        }
+      }
+    },
     "swaggerListPostsResponse": {
       "type": "object",
       "properties": {
@@ -428,7 +482,21 @@
           "type": "string"
         },
         "data": {
-          "$ref": "#/definitions/ListPostsResponsePostPagination"
+          "$ref": "#/definitions/swaggerListPostsResponsePostPagination"
+        }
+      }
+    },
+    "swaggerListPostsResponsePostPagination": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/swaggerPagination"
+        },
+        "posts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/swaggerPost"
+          }
         }
       }
     },

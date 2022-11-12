@@ -136,6 +136,23 @@ export type ListPostsResponse = {
   data?: ListPostsResponsePostPagination;
 };
 
+export type ListPostsMeRequest = {
+  limit?: number;
+  offset?: number;
+};
+
+export type ListPostsMeResponsePostPagination = {
+  pagination?: Pagination;
+  posts?: Post[];
+};
+
+export type ListPostsMeResponse = {
+  success?: boolean;
+  status?: number;
+  message?: string;
+  data?: ListPostsMeResponsePostPagination;
+};
+
 export type GetUploadUrlRequest = {
   fileName?: string;
 };
@@ -200,6 +217,15 @@ export class CookieService {
   ): Promise<ListPostsResponse> {
     return fm.fetchReq<ListPostsRequest, ListPostsResponse>(
       `/posts?${fm.renderURLSearchParams(req, [])}`,
+      { ...initReq, method: 'GET' }
+    );
+  }
+  static ListPostsMe(
+    req: ListPostsMeRequest,
+    initReq?: fm.InitReq
+  ): Promise<ListPostsMeResponse> {
+    return fm.fetchReq<ListPostsMeRequest, ListPostsMeResponse>(
+      `/posts/me?${fm.renderURLSearchParams(req, [])}`,
       { ...initReq, method: 'GET' }
     );
   }

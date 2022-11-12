@@ -95,7 +95,7 @@ const getPostsRequest = joi.object<{
   offset: joi.number().optional().default(0).integer(),
 });
 
-router.get('/posts', async (req: Request, res: Response) => {
+router.get('/posts/me', async (req: Request, res: Response) => {
   try {
     const valid = await getPostsRequest.validateAsync({
       ...req.body,
@@ -105,6 +105,27 @@ router.get('/posts', async (req: Request, res: Response) => {
       PostUseCase.listPosts({
         ...valid,
         userId: 2,
+      }),
+    ]);
+    response200(res, {
+      pagination: buildPaginationResponse({ ...valid, total }),
+      posts,
+    });
+    return;
+  } catch (err: any) {
+    handleResponseCatchError(res, err);
+  }
+});
+
+router.get('/posts', async (req: Request, res: Response) => {
+  try {
+    const valid = await getPostsRequest.validateAsync({
+      ...req.body,
+    });
+    const [total, posts] = await Promise.all([
+      PostUseCase.countPosts({}),
+      PostUseCase.listPosts({
+        ...valid,
       }),
     ]);
     response200(res, {
