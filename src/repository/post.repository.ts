@@ -63,10 +63,9 @@ export class PostRepository {
         },
       };
     }
-    console.log(limit);
     return await this.repo.find({
       where: whereClause,
-      relations: ['author', 'tags'],
+      relations: ['author', 'tags', 'tags.questions'],
       order: {
         created_at: sortByLatest ? 'DESC' : undefined,
       },
