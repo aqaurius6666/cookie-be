@@ -14,6 +14,7 @@ export type Tag = {
   id?: number;
   name?: string;
   isRequired?: boolean;
+  questions?: Question[];
 };
 
 export type Pagination = {

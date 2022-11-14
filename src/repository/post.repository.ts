@@ -11,7 +11,7 @@ export class PostRepository {
       where: {
         id,
       },
-      relations: ['author', 'tags'],
+      relations: ['author', 'tags', 'tags.questions'],
     });
     if (post == null) throw ERR_POST_NOT_FOUND;
     return post;

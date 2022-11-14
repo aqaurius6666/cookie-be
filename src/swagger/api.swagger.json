@@ -640,6 +640,12 @@
         },
         "isRequired": {
           "type": "boolean"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/swaggerQuestion"
+          }
         }
       }
     },
