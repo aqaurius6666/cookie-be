@@ -28,3 +28,7 @@ export class Post {
 
   public cook_time?: number;
 }
+
+export class Score {
+  public score?: number;
+}

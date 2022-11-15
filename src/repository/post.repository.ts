@@ -1,5 +1,4 @@
-import { In } from 'typeorm';
-import { Post, ERR_POST_NOT_FOUND } from '../model';
+import { Post, ERR_POST_NOT_FOUND, Score } from '../model';
 import PostSchema from '../schema/post.schema';
 import { dataSource } from './repository';
 
@@ -26,21 +25,30 @@ export class PostRepository {
     return await this.repo.save(post);
   }
 
-  static async getSuggestionPosts({ tags }: { tags: number[] }) {
-    const matchPostIds = (
-      await this.repo.query(
-        `select post_id from post_tag where tag_id = any ($1) 
-      group by post_id order by count("tag_id") desc`,
-        [tags]
+  static async getSuggestionPosts({
+    tags,
+  }: {
+    tags: number[];
+  }): Promise<Array<Post & Score>> {
+    const posts = this.repo
+      .createQueryBuilder('post')
+      .select('*')
+      .innerJoin(
+        (db) => {
+          return db
+            .select('post_id, count("tag_id") as score')
+            .from('post_tag', 'post_tag')
+            .where('tag_id = any (:tags)', { tags })
+            .groupBy('post_id');
+        },
+        'score',
+        'score.post_id = post.id'
       )
-    ).map((row: any) => row.post_id) as number[];
-
-    return await this.repo.find({
-      where: {
-        id: In(matchPostIds),
-      },
-      relations: ['author', 'tags'],
-    });
+      .orderBy('score.score', 'DESC')
+      .loadAllRelationIds({
+        relations: ['tags', 'author'],
+      });
+    return await posts.execute();
   }
 
   static async selectPosts({

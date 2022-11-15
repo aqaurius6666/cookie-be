@@ -1,5 +1,11 @@
 import logger from '../logger';
-import { Post, ERR_TAG_NOT_FOUND, User, PostWithQuestions } from '../model';
+import {
+  Post,
+  ERR_TAG_NOT_FOUND,
+  User,
+  PostWithQuestions,
+  Score,
+} from '../model';
 import {
   PostRepository,
   QuestionRepository,
@@ -106,10 +112,16 @@ export class PostUseCase {
       posts.map((e) => e.id ?? -1) // e always has id
     ); // get vote counts for each post
     return posts
-      .map((post, index): Post => {
+      .map((post, index): Post & Score => {
         return { ...post, ...votings[index] }; // merge vote counts with post
       })
-      .sort((left, right) => (right.upvote ?? 0) - (left.upvote ?? 0))
+      .sort((left, right) => {
+        if (left.score === right.score) {
+          return (right.upvote ?? 0) - (left.upvote ?? 0);
+        } else {
+          return (right.score ?? 0) - (left.score ?? 0);
+        }
+      })
       .slice(offset, offset + limit);
   }
 
