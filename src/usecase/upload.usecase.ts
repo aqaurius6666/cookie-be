@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import { getPostPresignUrl } from '../external/s3';
 import { parseMineType } from '../util/file';
 
@@ -15,9 +14,9 @@ export class UploadUsecase {
     userId: number;
   }): Promise<PresignedUploadDto> {
     const mineType = parseMineType(input.fileName);
-    const key = `uploads/${input.userId}/${randomUUID()}.${
-      input.fileName.split('.').pop() ?? 'unknown'
-    }`;
+    const key = `uploads/${input.userId}/${
+      input.fileName.split('.').reverse()[1]
+    }.${input.fileName.split('.').pop() ?? 'unknown'}`;
     const data = await getPostPresignUrl({
       key,
       mineType,
