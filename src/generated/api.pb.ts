@@ -201,6 +201,23 @@ export type DeleteUsersBookmarksResponse = {
   message?: string;
 };
 
+export type GetPostsBookmarkRequest = {
+  limit?: number;
+  offset?: number;
+};
+
+export type GetPostsBookmarkResponsePostPagination = {
+  pagination?: Pagination;
+  posts?: Post[];
+};
+
+export type GetPostsBookmarkResponse = {
+  success?: boolean;
+  status?: number;
+  message?: string;
+  data?: GetPostsBookmarkResponsePostPagination;
+};
+
 export class CookieService {
   static GetPostById(
     req: GetPostByIdRequest,
@@ -307,5 +324,14 @@ export class CookieService {
       method: 'DELETE',
       body: JSON.stringify(req, fm.replacer),
     });
+  }
+  static GetPostsBookmark(
+    req: GetPostsBookmarkRequest,
+    initReq?: fm.InitReq
+  ): Promise<GetPostsBookmarkResponse> {
+    return fm.fetchReq<GetPostsBookmarkRequest, GetPostsBookmarkResponse>(
+      `/posts/bookmark?${fm.renderURLSearchParams(req, [])}`,
+      { ...initReq, method: 'GET' }
+    );
   }
 }

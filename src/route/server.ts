@@ -7,7 +7,7 @@ import swaggerUI from 'swagger-ui-express';
 import swaggerDocument from '../swagger/api.swagger.json';
 
 const app = express();
-
+export const SKIP_AUTH_USER_ID = 2;
 const SKIP_URL = ['/health', '/'];
 if (process.env.NODE_ENV === 'development') {
   app.use(

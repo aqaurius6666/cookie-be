@@ -10,6 +10,7 @@ import {
   PostRepository,
   QuestionRepository,
   TagRepository,
+  UserRepository,
   VotingRepository,
 } from '../repository';
 
@@ -18,6 +19,7 @@ export class PostUseCase {
   private static readonly votingRepo = VotingRepository;
   private static readonly tagRepo = TagRepository;
   private static readonly questionRepo = QuestionRepository;
+  private static readonly userRepo = UserRepository;
 
   static async findOne(id: number): Promise<Post> {
     const post = await this.postRepo.findById(id);
@@ -156,5 +158,24 @@ export class PostUseCase {
   static async countPosts(options: { userId?: number }): Promise<number> {
     const total = await this.postRepo.count(options);
     return total;
+  }
+
+  static async countPostsBookmark(dto: { userId: number }): Promise<number> {
+    const total = await this.userRepo.getBookmarkPosts(dto.userId);
+    return total.length;
+  }
+
+  static async listPostsBookmark(dto: {
+    userId: number;
+    offset: number;
+    limit: number;
+  }): Promise<Post[]> {
+    const posts = await this.userRepo.getBookmarkPosts(dto.userId);
+    const votings = await this.votingRepo.getVoteCounts(
+      posts.map((e) => e.id ?? -1)
+    );
+    return posts.map((post, index): Post => {
+      return { ...post, ...votings[index] };
+    });
   }
 }

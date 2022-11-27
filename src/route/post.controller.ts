@@ -3,6 +3,7 @@ import joi from 'joi';
 import { PostUseCase } from '../usecase';
 import { buildPaginationResponse } from '../util/pagination';
 import { handleResponseCatchError, response200 } from '../util/response';
+import { SKIP_AUTH_USER_ID } from './server';
 const router = Router();
 
 const postsRequest = joi.object<{
@@ -106,10 +107,10 @@ router.get('/posts/me', async (req: Request, res: Response) => {
       ...req.query,
     });
     const [total, posts] = await Promise.all([
-      PostUseCase.countPosts({ userId: 2 }),
+      PostUseCase.countPosts({ userId: SKIP_AUTH_USER_ID }),
       PostUseCase.listPosts({
         ...valid,
-        userId: 2,
+        userId: SKIP_AUTH_USER_ID,
       }),
     ]);
     response200(res, {
@@ -132,6 +133,28 @@ router.get('/posts', async (req: Request, res: Response) => {
       PostUseCase.countPosts({}),
       PostUseCase.listPosts({
         ...valid,
+      }),
+    ]);
+    response200(res, {
+      pagination: buildPaginationResponse({ ...valid, total }),
+      posts,
+    });
+    return;
+  } catch (err: any) {
+    handleResponseCatchError(res, err);
+  }
+});
+
+router.get('/posts/bookmark', async (req: Request, res: Response) => {
+  try {
+    const valid = await getPostsRequest.validateAsync({
+      ...req.query,
+    });
+    const [total, posts] = await Promise.all([
+      PostUseCase.countPostsBookmark({ userId: SKIP_AUTH_USER_ID }),
+      PostUseCase.listPostsBookmark({
+        ...valid,
+        userId: SKIP_AUTH_USER_ID,
       }),
     ]);
     response200(res, {
