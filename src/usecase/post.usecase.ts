@@ -48,6 +48,7 @@ export class PostUseCase {
       isReceipe: boolean;
       tagIds: number[];
       cookTime: number;
+      thumbnail: string;
     },
     userId: number
   ) {
@@ -56,6 +57,7 @@ export class PostUseCase {
     const sPost = new Post();
     sPost.title = post.title;
     sPost.content = post.content;
+    sPost.thumbnail = post.thumbnail;
     // TODO: get author from token
     sPost.author = new User();
     sPost.author.id = userId;
@@ -75,6 +77,7 @@ export class PostUseCase {
       isReceipe: boolean;
       tagIds: number[];
       cookTime: number;
+      thumbnail: string;
     },
     userId: number
   ) {
@@ -87,6 +90,7 @@ export class PostUseCase {
     }
     sPost.title = post.title;
     sPost.content = post.content;
+    sPost.thumbnail = post.thumbnail;
     // TODO: get author from token
     sPost.is_receipe = post.isReceipe;
     sPost.cook_time = post.cookTime;

@@ -27,6 +27,8 @@ export class Post {
   public downvote?: number; // downvotes is the name of the column in the schema
 
   public cook_time?: number;
+
+  public thumbnail?: string;
 }
 
 export class Score {

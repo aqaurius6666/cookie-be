@@ -37,6 +37,11 @@ const PostSchema = new EntitySchema<Post>({
       type: Number,
       nullable: true,
     },
+    thumbnail: {
+      type: String,
+      nullable: false,
+      default: 'uploads/default.jpeg',
+    },
   },
   relations: {
     upvote_users: {

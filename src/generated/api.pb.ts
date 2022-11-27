@@ -36,6 +36,7 @@ export type Post = {
   downvote?: number;
   cookTime?: number;
   questions?: Question[];
+  thumbnail?: string;
 };
 
 export type Question = {
@@ -95,6 +96,7 @@ export type CreatePostsRequest = {
   isReceipe?: boolean;
   tagIds?: number[];
   cookTime?: number;
+  thumbnail?: string;
 };
 
 export type CreatePostsResponse = {
@@ -111,6 +113,7 @@ export type UpdatePostRequest = {
   isReceipe?: boolean;
   tagIds?: number[];
   cookTime?: number;
+  thumbnail?: string;
 };
 
 export type UpdatePostResponse = {

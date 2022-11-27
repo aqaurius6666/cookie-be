@@ -199,6 +199,9 @@
                 "cookTime": {
                   "type": "integer",
                   "format": "int32"
+                },
+                "thumbnail": {
+                  "type": "string"
                 }
               }
             }
@@ -371,6 +374,9 @@
         "cookTime": {
           "type": "integer",
           "format": "int32"
+        },
+        "thumbnail": {
+          "type": "string"
         }
       }
     },
@@ -565,6 +571,9 @@
           "items": {
             "$ref": "#/definitions/swaggerQuestion"
           }
+        },
+        "thumbnail": {
+          "type": "string"
         }
       }
     },

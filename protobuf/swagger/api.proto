@@ -66,6 +66,7 @@ message Post {
     int32 downvote = 10;
     int32 cook_time = 11;
     repeated Question questions = 12;
+    string thumbnail = 13;
 }
 
 message Question {
@@ -203,6 +204,7 @@ message CreatePostsRequest {
     bool is_receipe = 3;
     repeated int32 tag_ids = 4;
     int32 cook_time = 5;
+    string thumbnail = 6;
 }
 
 message CreatePostsResponse {
@@ -219,6 +221,7 @@ message UpdatePostRequest {
     bool is_receipe = 4;
     repeated int32 tag_ids = 5;
     int32 cook_time = 6;
+    string thumbnail = 7;
 }
 
 message UpdatePostResponse {
