@@ -14,4 +14,6 @@ export class User {
   public upvote_posts?: Post[];
 
   public downvote_posts?: Post[];
+
+  public bookmark_posts?: Post[];
 }

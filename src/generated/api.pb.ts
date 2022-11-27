@@ -168,6 +168,39 @@ export type GetUploadUrlResponse = {
   data?: UploadUrl;
 };
 
+export type GetUsersBookmarksRequest = {
+  userId?: string;
+};
+
+export type GetUsersBookmarksResponse = {
+  success?: boolean;
+  status?: number;
+  message?: string;
+  data?: number[];
+};
+
+export type PostUsersBookmarksRequest = {
+  userId?: string;
+  postId?: number;
+};
+
+export type PostUsersBookmarksResponse = {
+  success?: boolean;
+  status?: number;
+  message?: string;
+};
+
+export type DeleteUsersBookmarksRequest = {
+  userId?: string;
+  postId?: number;
+};
+
+export type DeleteUsersBookmarksResponse = {
+  success?: boolean;
+  status?: number;
+  message?: string;
+};
+
 export class CookieService {
   static GetPostById(
     req: GetPostByIdRequest,
@@ -241,5 +274,38 @@ export class CookieService {
       `/upload/presigned-upload`,
       { ...initReq, method: 'POST', body: JSON.stringify(req, fm.replacer) }
     );
+  }
+  static GetUsersBookmarks(
+    req: GetUsersBookmarksRequest,
+    initReq?: fm.InitReq
+  ): Promise<GetUsersBookmarksResponse> {
+    return fm.fetchReq<GetUsersBookmarksRequest, GetUsersBookmarksResponse>(
+      `/users/${req['userId']}/bookmarks?${fm.renderURLSearchParams(req, [
+        'userId',
+      ])}`,
+      { ...initReq, method: 'GET' }
+    );
+  }
+  static PostUsersBookmarks(
+    req: PostUsersBookmarksRequest,
+    initReq?: fm.InitReq
+  ): Promise<PostUsersBookmarksResponse> {
+    return fm.fetchReq<PostUsersBookmarksRequest, PostUsersBookmarksResponse>(
+      `/users/${req['userId']}/bookmarks`,
+      { ...initReq, method: 'POST', body: JSON.stringify(req, fm.replacer) }
+    );
+  }
+  static DeleteUsersBookmarks(
+    req: DeleteUsersBookmarksRequest,
+    initReq?: fm.InitReq
+  ): Promise<DeleteUsersBookmarksResponse> {
+    return fm.fetchReq<
+      DeleteUsersBookmarksRequest,
+      DeleteUsersBookmarksResponse
+    >(`/users/${req['userId']}/bookmarks`, {
+      ...initReq,
+      method: 'DELETE',
+      body: JSON.stringify(req, fm.replacer),
+    });
   }
 }

@@ -5,3 +5,4 @@ plugins:
     opt:
       - logtostderr=true
       - generate_unbound_methods=true
+      - allow_delete_body=true

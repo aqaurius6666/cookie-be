@@ -159,6 +159,33 @@ service CookieService {
             tags: "Upload";
         };
     }
+
+    rpc GetUsersBookmarks(GetUsersBookmarksRequest) returns (GetUsersBookmarksResponse) {
+        option (google.api.http) = {
+            get: "/users/{user_id}/bookmarks"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "User";
+        };
+    }
+    rpc PostUsersBookmarks(PostUsersBookmarksRequest) returns (PostUsersBookmarksResponse) {
+        option (google.api.http) = {
+            post: "/users/{user_id}/bookmarks"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "User";
+        };
+    }
+    rpc DeleteUsersBookmarks(DeleteUsersBookmarksRequest) returns (DeleteUsersBookmarksResponse) {
+        option (google.api.http) = {
+            delete: "/users/{user_id}/bookmarks"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "User";
+        };
+    }
 }
 
 
@@ -273,4 +300,38 @@ message GetUploadUrlResponse {
     int32 status = 2;
     string message = 3;
     UploadUrl data = 4;
+}
+
+message GetUsersBookmarksRequest {
+    string user_id = 1;
+}
+
+message GetUsersBookmarksResponse {
+    bool success = 1;
+    int32 status = 2;
+    string message = 3;
+    repeated int32 data = 4;
+}
+
+message PostUsersBookmarksRequest {
+    string user_id = 1;
+    int32 post_id = 2;
+}
+
+message PostUsersBookmarksResponse {
+    bool success = 1;
+    int32 status = 2;
+    string message = 3;
+}
+
+
+message DeleteUsersBookmarksRequest {
+    string user_id = 1;
+    int32 post_id = 2;
+}
+
+message DeleteUsersBookmarksResponse {
+    bool success = 1;
+    int32 status = 2;
+    string message = 3;
 }
