@@ -74,28 +74,27 @@ export class PostUseCase {
   static async updatePost(
     post: {
       id: number;
-      title: string;
-      content: string;
-      isReceipe: boolean;
-      tagIds: number[];
-      cookTime: number;
-      thumbnail: string;
+      title?: string;
+      content?: string;
+      isReceipe?: boolean;
+      tagIds?: number[];
+      cookTime?: number;
+      thumbnail?: string;
     },
     userId: number
   ) {
     const sPost = await this.postRepo.findById(post.id);
-    if (post.tagIds.length !== 0) {
+    if (post?.tagIds?.length) {
       const tags = await this.tagRepo.findByIds(post.tagIds);
-      console.log(tags);
       if (tags?.length !== post.tagIds.length) throw ERR_TAG_NOT_FOUND;
       sPost.tags = tags;
     }
-    sPost.title = post.title;
-    sPost.content = post.content;
-    sPost.thumbnail = post.thumbnail;
+    sPost.title = post.title ?? sPost.title;
+    sPost.content = post.content ?? sPost.content;
+    sPost.thumbnail = post.thumbnail ?? sPost.thumbnail;
     // TODO: get author from token
-    sPost.is_receipe = post.isReceipe;
-    sPost.cook_time = post.cookTime;
+    sPost.is_receipe = post.isReceipe ?? sPost.is_receipe;
+    sPost.cook_time = post.cookTime ?? sPost.cook_time;
     return await this.postRepo.update(sPost);
   }
 

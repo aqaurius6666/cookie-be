@@ -57,13 +57,13 @@ router.post('/posts', async (req: Request, res: Response) => {
   }
 });
 const updatePostRequest = joi.object<{
-  title: string;
-  content: string;
-  isReceipe: boolean;
-  tagIds: number[];
-  cookTime: number;
+  title?: string;
+  content?: string;
+  isReceipe?: boolean;
+  tagIds?: number[];
+  cookTime?: number;
   id: number;
-  thumbnail: string;
+  thumbnail?: string;
 }>({
   title: joi.string().optional().min(6).max(512),
   content: joi
@@ -71,11 +71,11 @@ const updatePostRequest = joi.object<{
     .optional()
     .min(6)
     .max(1024 * 1024),
-  isReceipe: joi.boolean().optional().default(true),
+  isReceipe: joi.boolean().optional(),
   tagIds: joi.array().items(joi.number().integer()).optional(),
-  cookTime: joi.number().optional().default(0).min(1).integer(),
+  cookTime: joi.number().optional().min(1).integer(),
   id: joi.number().required(),
-  thumbnail: joi.string().required(),
+  thumbnail: joi.string().optional(),
 });
 router.put('/posts/:id', async (req: Request, res: Response) => {
   try {
