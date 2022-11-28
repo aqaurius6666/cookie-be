@@ -170,10 +170,11 @@ export class PostUseCase {
     limit: number;
   }): Promise<Post[]> {
     const posts = await this.userRepo.getBookmarkPosts(dto.userId);
+    const nPosts = posts.slice(dto.offset, dto.offset + dto.limit);
     const votings = await this.votingRepo.getVoteCounts(
-      posts.map((e) => e.id ?? -1)
+      nPosts.map((e) => e.id ?? -1)
     );
-    return posts.map((post, index): Post => {
+    return nPosts.map((post, index): Post => {
       return { ...post, ...votings[index] };
     });
   }
