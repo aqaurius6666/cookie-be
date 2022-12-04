@@ -98,4 +98,39 @@ router.get('/users/:userId/bookmarks', async (req, res) => {
   }
 });
 
+const postUpvoteRequest = joi.object<{
+  userId: number;
+  postId: number;
+}>({
+  userId: joi.number().required(),
+  postId: joi.number().required(),
+});
+router.post('/users/:userId/upvote', async (req, res) => {
+  try {
+    const valid = await postUpvoteRequest.validateAsync({
+      ...req.body,
+      ...req.params,
+    });
+    await UserUsecase.upvotePost(valid.userId, valid.postId);
+    response200(res, 'OK');
+    return;
+  } catch (err: any) {
+    handleResponseCatchError(res, err);
+  }
+});
+
+const postDownvoteRequest = postUpvoteRequest;
+router.post('/users/:userId/downvote', async (req, res) => {
+  try {
+    const valid = await postDownvoteRequest.validateAsync({
+      ...req.body,
+      ...req.params,
+    });
+    await UserUsecase.upvotePost(valid.userId, valid.postId);
+    response200(res, 'OK');
+    return;
+  } catch (err: any) {
+    handleResponseCatchError(res, err);
+  }
+});
 export default router;

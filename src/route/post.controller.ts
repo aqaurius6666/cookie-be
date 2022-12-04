@@ -166,4 +166,22 @@ router.get('/posts/bookmark', async (req: Request, res: Response) => {
     handleResponseCatchError(res, err);
   }
 });
+
+const getPostsVotingRequest = joi.object<{
+  postIds: number[];
+}>({
+  postIds: joi.array().items(joi.number().integer()).optional(),
+});
+router.get('/posts/voting', async (req: Request, res: Response) => {
+  try {
+    const valid = await getPostsVotingRequest.validateAsync({
+      ...req.query,
+    });
+    const votings = await PostUseCase.listPostVotings(valid.postIds);
+    response200(res, votings);
+    return;
+  } catch (err: any) {
+    handleResponseCatchError(res, err);
+  }
+});
 export default router;

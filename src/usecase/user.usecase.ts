@@ -1,9 +1,14 @@
 import { Post, User } from '../model';
-import { BookmarkRepository, UserRepository } from '../repository';
+import {
+  BookmarkRepository,
+  UserRepository,
+  VotingRepository,
+} from '../repository';
 
 export class UserUsecase {
   private static readonly userRepo = UserRepository;
   private static readonly bookmarkRepo = BookmarkRepository;
+  private static readonly votingRepo = VotingRepository;
 
   static async findOne(id: number): Promise<User> {
     return await this.userRepo.findById(id);
@@ -26,5 +31,15 @@ export class UserUsecase {
     postId: number
   ): Promise<void> {
     return await this.bookmarkRepo.deleteBookmark(userId, postId);
+  }
+
+  static async upvotePost(userId: number, postId: number): Promise<void> {
+    await this.votingRepo.upvotePost(userId, postId);
+    
+  }
+
+  static async downvotePost(userId: number, postId: number): Promise<void> {
+    await this.votingRepo.downvotePost(userId, postId);
+    
   }
 }

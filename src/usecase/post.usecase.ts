@@ -180,4 +180,8 @@ export class PostUseCase {
       return { ...post, ...votings[index] };
     });
   }
+
+  static async listPostVotings(postIds: number[]): Promise<Post[]> {
+    return await this.votingRepo.getVoteCounts(postIds);
+  }
 }

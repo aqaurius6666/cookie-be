@@ -184,6 +184,34 @@
         "tags": ["Post"]
       }
     },
+    "/posts/voting": {
+      "get": {
+        "operationId": "CookieService_GetPostsVoting",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swaggerGetPostsVotingResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "postIds",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": ["Post"]
+      }
+    },
     "/posts/{id}": {
       "put": {
         "operationId": "CookieService_UpdatePost",
@@ -455,6 +483,90 @@
         ],
         "tags": ["User"]
       }
+    },
+    "/users/{userId}/downvote": {
+      "post": {
+        "operationId": "CookieService_PostUsersDownvote",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swaggerPostUsersDownvoteResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "postId": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        ],
+        "tags": ["User"]
+      }
+    },
+    "/users/{userId}/upvote": {
+      "post": {
+        "operationId": "CookieService_PostUsersUpvote",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swaggerPostUsersUpvoteResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "postId": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        ],
+        "tags": ["User"]
+      }
     }
   },
   "definitions": {
@@ -603,6 +715,27 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/swaggerPost"
+          }
+        }
+      }
+    },
+    "swaggerGetPostsVotingResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/swaggerVoting"
           }
         }
       }
@@ -805,6 +938,36 @@
         }
       }
     },
+    "swaggerPostUsersDownvoteResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "swaggerPostUsersUpvoteResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
     "swaggerQuestion": {
       "type": "object",
       "properties": {
@@ -927,6 +1090,23 @@
         },
         "name": {
           "type": "string"
+        }
+      }
+    },
+    "swaggerVoting": {
+      "type": "object",
+      "properties": {
+        "upvote": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "downvote": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     }

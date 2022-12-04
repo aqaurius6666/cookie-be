@@ -34,11 +34,11 @@ export class VotingRepository {
         (e) => e.id !== post.id
       ); // remove post from downvote_posts if it exists
       user.upvote_posts?.push(post); // add post to upvote_posts if it doesn't exist
-      return await this.userRepo.save(post);
+      return await this.userRepo.save(user);
     } else {
       user.upvote_posts = user.upvote_posts?.filter((e) => e.id !== post.id); // remove post from upvote_posts if it exists
       user.downvote_posts?.push(post); // add post to downvote_posts if it doesn't exist
-      return await this.userRepo.save(post);
+      return await this.userRepo.save(user);
     }
   }
 
@@ -66,6 +66,11 @@ export class VotingRepository {
 
   static async getVoteCounts(postIds: number[]): Promise<Post[]> {
     const postVotes = await this.postRepo.find({
+      select: {
+        id: true,
+        upvote_users: true,
+        downvote_users: true,
+      },
       where: {
         id: In(postIds),
       },
@@ -77,6 +82,7 @@ export class VotingRepository {
       return {
         upvote: post.upvote_users?.length ?? 0,
         downvote: post.downvote_users?.length ?? 0,
+        id: post.id,
       };
     });
   }

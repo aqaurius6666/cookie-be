@@ -55,6 +55,12 @@ export type UploadUrl = {
   fields?: UploadUrlUploadHeader[];
 };
 
+export type Voting = {
+  upvote?: number;
+  downvote?: number;
+  id?: number;
+};
+
 export type GetPostByIdRequest = {
   id?: number;
 };
@@ -218,6 +224,39 @@ export type GetPostsBookmarkResponse = {
   data?: GetPostsBookmarkResponsePostPagination;
 };
 
+export type PostUsersUpvoteRequest = {
+  userId?: string;
+  postId?: number;
+};
+
+export type PostUsersUpvoteResponse = {
+  success?: boolean;
+  status?: number;
+  message?: string;
+};
+
+export type PostUsersDownvoteRequest = {
+  userId?: string;
+  postId?: number;
+};
+
+export type PostUsersDownvoteResponse = {
+  success?: boolean;
+  status?: number;
+  message?: string;
+};
+
+export type GetPostsVotingRequest = {
+  postIds?: string;
+};
+
+export type GetPostsVotingResponse = {
+  success?: boolean;
+  status?: number;
+  message?: string;
+  data?: Voting[];
+};
+
 export class CookieService {
   static GetPostById(
     req: GetPostByIdRequest,
@@ -331,6 +370,33 @@ export class CookieService {
   ): Promise<GetPostsBookmarkResponse> {
     return fm.fetchReq<GetPostsBookmarkRequest, GetPostsBookmarkResponse>(
       `/posts/bookmark?${fm.renderURLSearchParams(req, [])}`,
+      { ...initReq, method: 'GET' }
+    );
+  }
+  static PostUsersUpvote(
+    req: PostUsersUpvoteRequest,
+    initReq?: fm.InitReq
+  ): Promise<PostUsersUpvoteResponse> {
+    return fm.fetchReq<PostUsersUpvoteRequest, PostUsersUpvoteResponse>(
+      `/users/${req['userId']}/upvote`,
+      { ...initReq, method: 'POST', body: JSON.stringify(req, fm.replacer) }
+    );
+  }
+  static PostUsersDownvote(
+    req: PostUsersDownvoteRequest,
+    initReq?: fm.InitReq
+  ): Promise<PostUsersDownvoteResponse> {
+    return fm.fetchReq<PostUsersDownvoteRequest, PostUsersDownvoteResponse>(
+      `/users/${req['userId']}/downvote`,
+      { ...initReq, method: 'POST', body: JSON.stringify(req, fm.replacer) }
+    );
+  }
+  static GetPostsVoting(
+    req: GetPostsVotingRequest,
+    initReq?: fm.InitReq
+  ): Promise<GetPostsVotingResponse> {
+    return fm.fetchReq<GetPostsVotingRequest, GetPostsVotingResponse>(
+      `/posts/voting?${fm.renderURLSearchParams(req, [])}`,
       { ...initReq, method: 'GET' }
     );
   }

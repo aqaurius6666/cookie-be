@@ -83,7 +83,11 @@ message UploadUrl {
     }
     repeated UploadHeader fields = 2; 
 }
-
+message Voting {
+    int32 upvote = 1;
+    int32 downvote = 2;
+    int32 id = 3;
+}
 service CookieService {
     rpc GetPostById(GetPostByIdRequest) returns (GetPostByIdResponse) {
         option (google.api.http) = {
@@ -189,6 +193,34 @@ service CookieService {
     rpc GetPostsBookmark(GetPostsBookmarkRequest) returns (GetPostsBookmarkResponse) {
         option (google.api.http) = {
             get: "/posts/bookmark"
+
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "Post";
+        };
+    }
+
+    rpc PostUsersUpvote(PostUsersUpvoteRequest) returns (PostUsersUpvoteResponse) {
+        option (google.api.http) = {
+            post: "/users/{user_id}/upvote"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "User";
+        };
+    }
+    rpc PostUsersDownvote(PostUsersDownvoteRequest) returns (PostUsersDownvoteResponse) {
+        option (google.api.http) = {
+            post: "/users/{user_id}/downvote"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "User";
+        };
+    }
+    rpc GetPostsVoting(GetPostsVotingRequest) returns (GetPostsVotingResponse) {
+        option (google.api.http) = {
+            get: "/posts/voting"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             tags: "Post";
@@ -359,4 +391,37 @@ message GetPostsBookmarkResponse {
         repeated Post posts = 2;
     }
     PostPagination data = 4;
+}
+
+message PostUsersUpvoteRequest {
+    string user_id = 1;
+    int32 post_id = 2;
+}
+
+message PostUsersUpvoteResponse {
+    bool success = 1;
+    int32 status = 2;
+    string message = 3;
+}
+
+message PostUsersDownvoteRequest {
+    string user_id = 1;
+    int32 post_id = 2;
+}
+
+message PostUsersDownvoteResponse {
+    bool success = 1;
+    int32 status = 2;
+    string message = 3;
+}
+
+message GetPostsVotingRequest {
+    string post_ids = 1;
+}
+
+message GetPostsVotingResponse {
+    bool success = 1;
+    int32 status = 2;
+    string message = 3;
+    repeated Voting data = 4;
 }
