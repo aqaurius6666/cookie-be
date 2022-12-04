@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import logger from '../logger';
 import { StatusError } from '../model';
 
 export const response200 = (res: Response, data: any) => {
@@ -48,6 +49,7 @@ export const handleStatusError = (res: Response, err: StatusError) => {
 };
 
 export const handleResponseCatchError = (res: Response, err: any) => {
+  logger.error({ err });
   if (err instanceof StatusError) {
     handleStatusError(res, err);
     return;

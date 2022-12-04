@@ -1,8 +1,9 @@
 import { Post, User } from '../model';
-import { UserRepository } from '../repository';
+import { BookmarkRepository, UserRepository } from '../repository';
 
 export class UserUsecase {
   private static readonly userRepo = UserRepository;
+  private static readonly bookmarkRepo = BookmarkRepository;
 
   static async findOne(id: number): Promise<User> {
     return await this.userRepo.findById(id);
@@ -13,17 +14,17 @@ export class UserUsecase {
   }
 
   static async bookmarkPost(userId: number, postId: number): Promise<void> {
-    return await this.userRepo.bookmarkPost(userId, postId);
+    return await this.bookmarkRepo.createBookmark(userId, postId);
   }
 
   static async getBookmarkPosts(userId: number): Promise<Post[]> {
-    return await this.userRepo.getBookmarkPosts(userId);
+    return await this.bookmarkRepo.getBookmarkPosts(userId);
   }
 
   static async deleteBookmarkPost(
     userId: number,
     postId: number
   ): Promise<void> {
-    return await this.userRepo.deleteBookmarkPost(userId, postId);
+    return await this.bookmarkRepo.deleteBookmark(userId, postId);
   }
 }

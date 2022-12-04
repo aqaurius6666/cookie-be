@@ -79,17 +79,16 @@ const UserSchema = new EntitySchema<User>({
       },
     },
     bookmark_posts: {
-      type: 'many-to-many',
-      target: 'Post',
+      type: 'one-to-many',
+      target: 'Bookmark',
       joinTable: {
-        name: 'bookmark_post',
-        joinColumn: {
+        inverseJoinColumn: {
           name: 'user_id',
           referencedColumnName: 'id',
         },
-        inverseJoinColumn: {
-          name: 'post_id',
-          referencedColumnName: 'id',
+        joinColumn: {
+          name: 'id',
+          referencedColumnName: 'user_id',
         },
       },
     },

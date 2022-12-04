@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "build:production": "tsc --sourceMap false",
-    "dev": "yarn build && NODE_ENV=development node --inspect dist/index.js",
+    "clean": "rimraf dist",
+    "dev": "yarn clean && yarn build && NODE_ENV=development node --inspect dist/index.js",
     "dev:nodemon": "nodemon --watch src --ext ts --exec \"yarn dev\"",
     "start": "NODE_ENV=production node dist/index.js",
     "lint": "eslint src --ext .ts",
@@ -53,6 +54,7 @@
     "lint-staged": "^13.0.3",
     "nodemon": "^2.0.20",
     "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
     "ts-protoc-gen": "^0.15.0",
     "typescript": "*"
   }

@@ -1,3 +1,4 @@
+import { Bookmark } from './bookmark.model';
 import { Post } from './post.model';
 
 export class User {
@@ -15,5 +16,5 @@ export class User {
 
   public downvote_posts?: Post[];
 
-  public bookmark_posts?: Post[];
+  public bookmark_posts?: Bookmark[];
 }

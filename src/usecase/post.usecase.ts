@@ -7,6 +7,7 @@ import {
   Score,
 } from '../model';
 import {
+  BookmarkRepository,
   PostRepository,
   QuestionRepository,
   TagRepository,
@@ -20,6 +21,7 @@ export class PostUseCase {
   private static readonly tagRepo = TagRepository;
   private static readonly questionRepo = QuestionRepository;
   private static readonly userRepo = UserRepository;
+  private static readonly bookmarkRepo = BookmarkRepository;
 
   static async findOne(id: number): Promise<Post> {
     const post = await this.postRepo.findById(id);
@@ -160,7 +162,7 @@ export class PostUseCase {
   }
 
   static async countPostsBookmark(dto: { userId: number }): Promise<number> {
-    const total = await this.userRepo.getBookmarkPosts(dto.userId);
+    const total = await this.bookmarkRepo.getBookmarkPosts(dto.userId);
     return total.length;
   }
 
@@ -169,7 +171,7 @@ export class PostUseCase {
     offset: number;
     limit: number;
   }): Promise<Post[]> {
-    const posts = await this.userRepo.getBookmarkPosts(dto.userId);
+    const posts = await this.bookmarkRepo.getBookmarkPosts(dto.userId);
     const nPosts = posts.slice(dto.offset, dto.offset + dto.limit);
     const votings = await this.votingRepo.getVoteCounts(
       nPosts.map((e) => e.id ?? -1)
