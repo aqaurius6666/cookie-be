@@ -126,7 +126,7 @@ router.post('/users/:userId/downvote', async (req, res) => {
       ...req.body,
       ...req.params,
     });
-    await UserUsecase.upvotePost(valid.userId, valid.postId);
+    await UserUsecase.downvotePost(valid.userId, valid.postId);
     response200(res, 'OK');
     return;
   } catch (err: any) {
