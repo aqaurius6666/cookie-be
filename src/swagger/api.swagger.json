@@ -609,6 +609,34 @@
         ],
         "tags": ["User"]
       }
+    },
+    "/users/{userId}/votings": {
+      "get": {
+        "operationId": "CookieService_GetUsersVotings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swaggerGetUsersVotingsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": ["User"]
+      }
     }
   },
   "definitions": {
@@ -826,6 +854,27 @@
           "items": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      }
+    },
+    "swaggerGetUsersVotingsResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/swaggerVoting"
           }
         }
       }

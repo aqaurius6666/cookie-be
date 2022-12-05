@@ -149,4 +149,22 @@ router.post('/users/:userId/unvote', async (req, res) => {
   }
 });
 
+const getUserVotings = joi.object<{
+  userId: number;
+}>({
+  userId: joi.number().required(),
+});
+router.get('/users/:userId/votings', async (req, res) => {
+  try {
+    const valid = await getUserVotings.validateAsync({
+      ...req.params,
+    });
+    const results = await UserUsecase.getUserVotings(valid.userId);
+    response200(res, results);
+    return;
+  } catch (err: any) {
+    handleResponseCatchError(res, err);
+  }
+});
+
 export default router;

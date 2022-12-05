@@ -128,4 +128,30 @@ export class VotingRepository {
       downvote: user.downvote_posts?.some((e) => e.id === post.id) ?? false,
     };
   }
+
+  static async getUserVoting(userId: number) {
+    const user = await this.userRepo.findOne({
+      where: {
+        id: userId,
+      },
+      relations: ['upvote_posts', 'downvote_posts'],
+    });
+    if (user === null) throw ERR_USER_NOT_FOUND;
+    return [
+      ...(user.upvote_posts?.map((e) => {
+        return {
+          id: e.id!,
+          upvote: 1,
+          downvote: 0,
+        };
+      }) ?? []),
+      ...(user.downvote_posts?.map((e) => {
+        return {
+          id: e.id!,
+          upvote: 0,
+          downvote: 1,
+        };
+      }) ?? []),
+    ];
+  }
 }

@@ -44,4 +44,8 @@ export class UserUsecase {
   static async unvotePost(userId: number, postId: number): Promise<void> {
     await this.votingRepo.unvotePost(userId, postId);
   }
+
+  static async getUserVotings(userId: number): Promise<any> {
+    return await this.votingRepo.getUserVoting(userId);
+  }
 }
