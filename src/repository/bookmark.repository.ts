@@ -1,4 +1,4 @@
-import { Post } from '../model';
+import { Bookmark, Post } from '../model';
 import BookmarkSchema from '../schema/bookmark.schema';
 import { dataSource } from './repository';
 
@@ -15,16 +15,11 @@ export class BookmarkRepository {
         id: postId,
       },
     });
-    if (bookmark) return;
-
-    await this.bookmarkRepo.create({
-      user: {
-        id: userId,
-      },
-      post: {
-        id: postId,
-      },
-    });
+    if (bookmark.length) return;
+    const _bookmark = new Bookmark();
+    _bookmark.user = { id: userId };
+    _bookmark.post = { id: postId };
+    await this.bookmarkRepo.save(_bookmark);
   }
 
   static async deleteBookmark(userId: number, postId: number): Promise<void> {
