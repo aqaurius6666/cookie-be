@@ -133,4 +133,20 @@ router.post('/users/:userId/downvote', async (req, res) => {
     handleResponseCatchError(res, err);
   }
 });
+
+const postUnvoteRequest = postUpvoteRequest;
+router.post('/users/:userId/unvote', async (req, res) => {
+  try {
+    const valid = await postUnvoteRequest.validateAsync({
+      ...req.body,
+      ...req.params,
+    });
+    await UserUsecase.unvotePost(valid.userId, valid.postId);
+    response200(res, 'OK');
+    return;
+  } catch (err: any) {
+    handleResponseCatchError(res, err);
+  }
+});
+
 export default router;

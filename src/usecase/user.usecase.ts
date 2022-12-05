@@ -35,11 +35,13 @@ export class UserUsecase {
 
   static async upvotePost(userId: number, postId: number): Promise<void> {
     await this.votingRepo.upvotePost(userId, postId);
-    
   }
 
   static async downvotePost(userId: number, postId: number): Promise<void> {
     await this.votingRepo.downvotePost(userId, postId);
-    
+  }
+
+  static async unvotePost(userId: number, postId: number): Promise<void> {
+    await this.votingRepo.unvotePost(userId, postId);
   }
 }

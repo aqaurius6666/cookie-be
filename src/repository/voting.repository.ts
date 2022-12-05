@@ -50,6 +50,26 @@ export class VotingRepository {
     return await this.handleVote(postId, userId, VoteType.DOWNVOTE);
   }
 
+  static async unvotePost(userId: number, postId: number) {
+    const user = await this.userRepo.findOne({
+      where: {
+        id: userId,
+      },
+      relations: ['upvote_posts', 'downvote_posts'],
+    });
+    if (user == null) throw ERR_USER_NOT_FOUND;
+    let post = user.upvote_posts?.find((e) => e.id === postId);
+    if (post != null) {
+      user.upvote_posts = user.upvote_posts?.filter((e) => e.id !== postId);
+      return await this.userRepo.save(user);
+    }
+    post = user.downvote_posts?.find((e) => e.id === postId);
+    if (post != null) {
+      user.downvote_posts = user.downvote_posts?.filter((e) => e.id !== postId);
+      return await this.userRepo.save(user);
+    }
+  }
+
   static async getVoteCount(postId: number): Promise<Post> {
     const post = await this.postRepo.findOne({
       where: {

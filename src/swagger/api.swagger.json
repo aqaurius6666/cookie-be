@@ -526,6 +526,48 @@
         "tags": ["User"]
       }
     },
+    "/users/{userId}/unvote": {
+      "post": {
+        "operationId": "CookieService_PostUserUnvote",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/swaggerPostUserUnvoteResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "postId": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        ],
+        "tags": ["Post"]
+      }
+    },
     "/users/{userId}/upvote": {
       "post": {
         "operationId": "CookieService_PostUsersUpvote",
@@ -919,6 +961,21 @@
           }
         },
         "thumbnail": {
+          "type": "string"
+        }
+      }
+    },
+    "swaggerPostUserUnvoteResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
           "type": "string"
         }
       }

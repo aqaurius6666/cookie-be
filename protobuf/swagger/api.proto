@@ -226,6 +226,15 @@ service CookieService {
             tags: "Post";
         };
     }
+    rpc PostUserUnvote(PostUserUnvoteRequest) returns (PostUserUnvoteResponse) {
+        option (google.api.http) = {
+            post: "/users/{user_id}/unvote"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "Post";
+        };
+    }
     
 }
 
@@ -424,4 +433,15 @@ message GetPostsVotingResponse {
     int32 status = 2;
     string message = 3;
     repeated Voting data = 4;
+}
+
+message PostUserUnvoteRequest {
+    string user_id = 1;
+    int32 post_id = 2;
+}
+
+message PostUserUnvoteResponse {
+    bool success = 1;
+    int32 status = 2;
+    string message = 3;
 }

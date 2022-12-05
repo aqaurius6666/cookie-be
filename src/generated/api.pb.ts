@@ -257,6 +257,17 @@ export type GetPostsVotingResponse = {
   data?: Voting[];
 };
 
+export type PostUserUnvoteRequest = {
+  userId?: string;
+  postId?: number;
+};
+
+export type PostUserUnvoteResponse = {
+  success?: boolean;
+  status?: number;
+  message?: string;
+};
+
 export class CookieService {
   static GetPostById(
     req: GetPostByIdRequest,
@@ -398,6 +409,15 @@ export class CookieService {
     return fm.fetchReq<GetPostsVotingRequest, GetPostsVotingResponse>(
       `/posts/voting?${fm.renderURLSearchParams(req, [])}`,
       { ...initReq, method: 'GET' }
+    );
+  }
+  static PostUserUnvote(
+    req: PostUserUnvoteRequest,
+    initReq?: fm.InitReq
+  ): Promise<PostUserUnvoteResponse> {
+    return fm.fetchReq<PostUserUnvoteRequest, PostUserUnvoteResponse>(
+      `/users/${req['userId']}/unvote`,
+      { ...initReq, method: 'POST', body: JSON.stringify(req, fm.replacer) }
     );
   }
 }
